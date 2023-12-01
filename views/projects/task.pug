@@ -1,0 +1,285 @@
+extends ../layouts/base
+
+block content
+	.content
+		.page-inner
+			.page-header
+				h4.page-title Sprints
+				ul.breadcrumbs
+					li.nav-home
+						a(href="/web/v1/dashboard")
+							i.flaticon-home
+					li.separator
+						i.flaticon-right-arrow
+					li.nav-item
+						a(href="/web/v1/projects") Projects
+					li.separator
+						i.flaticon-right-arrow
+					li.nav-item
+						a(href="#") Task
+			.row
+				.col-md-12
+					.card.full-height
+						.card-body
+							.row 
+								.col-lg-8 
+									.card-title Tasks Project ##{data.code}
+									.card-category Daily information about tasks project #{data.name}
+								.col-lg-4
+									.card-tools.text-right
+										button.btn.btn-dark(data-original-title="Create Task", data-toggle='modal', href='', data-target='#create')
+											span.btn-label
+												i.fa.fa-plus
+											| 
+											| Create
+							br
+							.d-flex.flex-wrap
+							br
+							.row 
+								.col-lg-4
+									h4(style="text-align: center;") To Do
+									.card(style="background-color: #e9ecef;")
+										.col-sm-12.col-lg-12
+											br
+											br
+											.card.p-3
+												.row
+													.col-lg-12
+														.text-right(style="font-size: 20px;")
+															i.far.fa-play-circle(style="cursor: pointer;")
+															|
+															|
+															i.far.fa-pause-circle(style="cursor: pointer;", title='', data-original-title="Pause Task", data-toggle='modal', href='', data-target='#pause')
+												br
+												br
+												.d-flex.align-items-center
+													span.stamp.stamp-md.bg-primary.mr-3
+														i.fa.fa-check
+													div
+														h5.mb-1
+															b #1234-1
+														small.text-muted Feat: Crete Formula Estimasi Panen Per Pixel Kering dan Basah
+												hr
+												.row 
+													.col-md-8 
+														div(style="font-size: 12px;")
+															small.text-muted 11/20/2022 - 14:00
+															br
+															small.text-muted Created By : Nova Zaky Fathoni
+													.col-md-4
+														.text-right
+															//- button.dropdown-toggle(data-toggle="dropdown", href="#", aria-expanded="false")
+															i.fa.fa-bars(data-toggle="dropdown", href="#", aria-expanded="false", style="cursor: pointer;")
+															ul.dropdown-menu
+																li
+																	a.dropdown-item(data-original-title="Show Task", data-toggle='modal', href='', data-target='#show') show
+																li
+																	a.dropdown-item(href="#") move to
+																		|
+																		|
+																		i.fas.fa-angle-double-right
+																	ul.dropdown-menu.dropdown-submenu
+																		li
+																			a.dropdown-item(href="#") todo
+																		li
+																			a.dropdown-item(href="#") in progress
+																		li
+																			a.dropdown-item(href="#") done
+																.dropdown-divider
+																li
+																	a.dropdown-item(data-original-title="Comments Task", data-toggle='modal', href='', data-target='#comments') comments
+																.dropdown-divider
+																li
+																	a.dropdown-item(href='/web/v1/projects/detail?_id=87654321') delete
+								.col-lg-4
+									h4(style="text-align: center;") In Progress
+									.card(style="background-color: #e9ecef;")
+										.col-sm-12.col-lg-12
+											br
+											br
+											.card.p-3
+												.row
+													.col-lg-12
+														.text-right(style="font-size: 20px;")
+															i.far.fa-play-circle(style="cursor: pointer;")
+															|
+															|
+															i.far.fa-pause-circle(style="cursor: pointer;")
+												.d-flex.align-items-center
+													span.stamp.stamp-md.bg-danger.mr-3
+														i.fa.fa-circle
+													div
+														h5.mb-1
+															b #1234-1
+														small.text-muted Fix: Bug Formula Estimasi Panen Per Pixel to get Coordinates
+												hr
+												.row 
+													.col-md-8 
+														div(style="font-size: 12px;")
+															span 11/20/2022 - 14:00
+													.col-md-4
+														.text-right
+															i.fa.fa-bars
+
+								.col-lg-4
+									h4(style="text-align: center;") Done
+									.card(style="background-color: #e9ecef;")
+										.col-sm-12.col-lg-12
+											br
+											br
+											.card.p-3
+												.row
+													.col-lg-12
+														.text-right(style="font-size: 20px;")
+															i.far.fa-play-circle(style="cursor: pointer;")
+															|
+															|
+															i.far.fa-pause-circle(style="cursor: pointer;")
+												.d-flex.align-items-center
+													span.stamp.stamp-md.bg-primary.mr-3
+														i.fa.fa-check
+													div
+														h5.mb-1
+															b #1234-1
+														small.text-muted Feat: Import Geojson To Database
+												hr
+												.row 
+													.col-md-8 
+														div(style="font-size: 12px;")
+															span 11/20/2022 - 14:00
+													.col-md-4
+														.text-right
+															i.fa.fa-bars
+
+
+	.modal.fade(id='create',tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+		.modal-dialog(style="width: 600px;")
+			.modal-content
+				.modal-header
+					h2
+						b Create Task
+					button.close(type="button", data-dismiss="modal")
+						span(aria-hidden="true")
+							i.fas.fa-window-close
+						span.sr-only close
+				.modal-body
+					form(action='/topografi/create', enctype='multipart/form-data', method='post')
+						.form-group
+							label(for="exampleFormControlInput1") 
+								| Labels
+								span.text-danger *
+							select.form-control(name="labels", id='', required="required")
+								option(value='') -- Labels --
+								option(value="Feature") Feature
+								option(value="Fix Bug") Fix Bug
+						.form-group
+							label(for="exampleFormControlInput1") 
+								| Name
+								//- span.text-danger *
+							input.form-control(type="text", name="name", required="required", placeholder="Name")
+						.form-group
+							label(for="exampleFormControlInput1") 
+								| Description
+								//- span.text-danger *
+							textarea#description.form-control(rows='3', name='description', placeholder="Description")
+						.form-group
+							button.btn.btn-primary.waves-effect.waves-light.float-right(type="submit") Create
+
+							
+
+	.modal.fade(id='show',tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+		.modal-dialog(style="width: 700px;")
+			.modal-content
+				.modal-header
+					span.stamp.stamp-sm.bg-primary.mr-3
+						i.fa.fa-check
+					div
+						h2.mb-1
+							b #1234-1
+					button.close(type="button", data-dismiss="modal")
+						span(aria-hidden="true")
+							i.fas.fa-window-close
+						span.sr-only close
+				.modal-body
+					.row 
+						.col-lg-12 
+							.container
+								h4.fw-bold.mb-1 Name
+								p Feat: Crete Formula Estimasi Panen Per Pixel Kering dan Basah
+
+								h4.fw-bold.mb-1 Descriptions
+								p Some quick example text to build on the card title and make up the bulk of the card's content.
+								
+								h4.fw-bold.mb-1 Documentation
+								p
+									img(src="/assets/images/agriculture-bg.png", alt="Img Profile" width="90%")
+								br
+								
+								h4.fw-bold.mb-1 Comments
+								br
+								.row 
+									.col-lg-8
+										.d-flex
+											.avatar.avatar-online.avatar-sm
+												img.avatar-img.rounded-circle(src="/assets/images/avatar_default.png", alt="image profile")
+											.flex-1.ml-3.pt-1
+												h5.fw-bold.mb-1 Joko Subianto 
+													span.text-primary.pl-3(style="font-size: 12px;") 11/20/2022 - 14:00
+												span.text-muted Pug is a terse and simple templating language with a strong focus on performance and powerful features.
+										br
+										.d-flex
+											.avatar.avatar-online.avatar-sm
+												img.avatar-img.rounded-circle(src="/assets/images/avatar_default.png", alt="image profile")
+											.flex-1.ml-3.pt-1
+												h5.fw-bold.mb-1 Joko Subianto 
+													span.text-primary.pl-3(style="font-size: 12px;") 11/20/2022 - 14:00
+												span.text-muted I am facing some trouble with my viewport. When i start my
+								br
+								br
+				.modal-footer
+					//- button.btn.btn-danger(type='button', data-dismiss='modal') Close
+					p Created November 26, 2020 at 2:25 PM
+
+
+	.modal.fade(id='pause',tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+		.modal-dialog(style="width: 500px;")
+			.modal-content
+				.modal-header
+					h2
+						b Reason Pause Task
+					button.close(type="button", data-dismiss="modal")
+						span(aria-hidden="true")
+							i.fas.fa-window-close
+						span.sr-only close
+				.modal-body
+					form.form-validation(role="form", action='/web/v1/positions/insert', enctype='multipart/form-data', method='post', accept=".jpg, .jpeg, .png")
+						.form-group.row
+							.col-sm-12
+								//- input.form-control(type="text", name="address", required="required", placeholder="Address")
+								textarea#reason.form-control(rows='3', name='reason', required)
+						.form-group.row
+							.col-sm-12.col-sm-offset-4
+								button.btn.btn-primary.waves-effect.waves-light.float-right(type="submit")
+									| Submit
+
+	
+	.modal.fade(id='comments',tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+		.modal-dialog(style="width: 500px;")
+			.modal-content
+				.modal-header
+					h2
+						b Comments
+					button.close(type="button", data-dismiss="modal")
+						span(aria-hidden="true")
+							i.fas.fa-window-close
+						span.sr-only close
+				.modal-body
+					form.form-validation(role="form", action='/web/v1/positions/insert', enctype='multipart/form-data', method='post', accept=".jpg, .jpeg, .png")
+						.form-group.row
+							.col-sm-12
+								//- input.form-control(type="text", name="address", required="required", placeholder="Address")
+								textarea#reason.form-control(rows='3', name='reason', required)
+						.form-group.row
+							.col-sm-12.col-sm-offset-4
+								button.btn.btn-primary.waves-effect.waves-light.float-right(type="submit")
+									| Submit

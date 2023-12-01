@@ -53,6 +53,10 @@ const uploadS3 = multer({
     {
         name: 'clients',
         maxCount: 1
+    },
+    {
+        name: 'blog',
+        maxCount: 1
     }
 ]);
 

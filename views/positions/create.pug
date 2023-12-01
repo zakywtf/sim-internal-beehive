@@ -1,0 +1,63 @@
+extends ../layouts/base
+
+block content
+	.content
+		.page-inner
+			.page-header
+				h4.page-title Positions
+				ul.breadcrumbs
+					li.nav-home
+						a(href="#")
+							i.flaticon-home
+					li.separator
+						i.flaticon-right-arrow
+					li.nav-item
+						a(href="/web/v1/positions") Positions
+					li.separator
+						i.flaticon-right-arrow
+					li.nav-item
+						a(href="#") Create Position
+			.row
+				.col-md-6
+					.card
+						.card-header
+							.d-flex.align-items-center
+								h4.card-title Create Positions
+						.card-body
+							.row 
+								.col-lg-12
+									//- .container
+									form(action='/web/v1/positions/insert', enctype='multipart/form-data', method='post', accept=".jpg, .jpeg, .png")
+										.form-group
+											label(for="exampleFormControlInput1") 
+												| Code
+												span.text-danger *
+											input.form-control(type="text", name="code", required="required", placeholder="Code")
+										.form-group
+											label(for="exampleFormControlInput1") 
+												| Name
+												span.text-danger *
+											input.form-control(type="text", name="name", required="required", placeholder="Name")
+										.form-group
+											label(for="exampleFormControlInput1") 
+												| Devision
+												span.text-danger *
+											select.form-control(name="family_category", id='', required="required")
+												option(value='') -- Devision --
+												option(value="Data Analyst") Data Analyst
+												option(value="Drone Operator") Drone Operator
+												option(value="Field Operator") Field Operator
+												option(value="Finance") Finance
+												option(value="Hardware") Hardware
+												option(value="Human Resource Development") Human Resource Development
+												option(value="Manufacture") Manufacture
+												option(value="Marketing") Marketing
+												option(value="Project Manager") Project Manager
+												option(value="Software") Software
+												option(value="Surveyor") Surveyor
+										//- .form-group
+										//- 	label(for="description") Keterangan
+										//- 	textarea#description.form-control(rows="12", name="description", style="height: 200px;")
+										.form-group
+											button.btn.btn-info.float-right(type="submit") Submit
+											

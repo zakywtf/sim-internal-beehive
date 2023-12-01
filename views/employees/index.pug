@@ -1,0 +1,362 @@
+extends ../layouts/base
+
+block content
+	.content
+		.page-inner
+			.page-header
+				h4.page-title Employees
+				ul.breadcrumbs
+					li.nav-home
+						a(href="#")
+							i.flaticon-home
+					li.separator
+						i.flaticon-right-arrow
+					li.nav-item
+						a(href="#") Employees
+			.row
+				.col-md-12
+					.card
+						.card-header
+							.row 
+								.col-lg-12
+									.d-flex.align-items-center
+										h4.card-title Employees
+										a.button.btn.btn-dark.btn-round.ml-auto(title='', data-original-title="Create Position", data-toggle='modal', href='', data-target='#create')
+											i.fa.fa-plus
+											| 
+											| Create
+						.card-body
+							.table-responsive
+								table#basic-datatables.display.table.table-striped.table-hover
+									thead
+										tr
+											th No
+											th Employee ID
+											th Name
+											th Phone
+											th Email
+											th Position 
+											th Division 
+											th jobdesc 
+											th Status
+											th Action
+									tbody
+										-var no = 1;
+										each data in datas
+											tr 
+												td #{no++}
+												td
+													a(href="/web/v1/employees/detail?user_id="+data._id)
+														span.text-primary #{data.employee_id}
+												td 
+													b #{data.name}
+												td #{data.phone}
+												td #{data.email}
+												td #{data.position}
+												td #{data.division}
+												td #{data.jobdesc}
+												td(style="text-align: center;")
+													if data.status == 'inactive'
+														span.badge.badge-danger Inactive
+													else if data.status == 'active'
+														span.badge.badge-success Active
+												td.d-none.d-md-table-cell
+													a.button.btn.btn-link.btn-primary.btn-lg(type="button", data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Attendance", href="/web/v1/employees/attendance?user_id="+data._id)
+														i.fa.fa-calendar-check
+													a.button.btn.btn-link.btn-primary.btn-lg(type="button", data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Edit Data", href='/infrastructure/edit/')
+														i.fa.fa-edit
+													button.btn.btn-link.btn-danger(type="button", title='', data-original-title="Hapus Data", data-toggle='modal', href='', data-target='#hapus'+data._id)
+														i.fa.fa-times
+											//- td.d-none.d-md-table-cell
+											//- 	button.btn.btn-lg.btn-outline-dark.dropdown-toggle(data-toggle="dropdown", href="#", aria-expanded="false")
+											//- 		| Action
+											//- 	ul.dropdown-menu
+											//- 		li 
+											//- 			a.dropdown-item(href="/web/v1/employees/detail?user_id=6516d799dd83bb3ebc1ad353") Detail
+											//- 		.dropdown-divider
+											//- 		li
+											//- 			a.dropdown-item(href='/web/v1/employees/detail?_id=87654321') Edit
+														
+											//- 		li 
+											//- 			a.dropdown-item(href="/web/v1/employees/task?_id=87654321") Delete
+
+	each data in datas
+		.modal.fade(id='hapus'+data._id ,tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+			.modal-dialog(style="width: 600px;")
+				.modal-content
+					.modal-header
+						h2#myModalLabel.modal-title Warning!
+					.modal-body
+						h4 Are you sure you want to delete the data #{data.name} ?
+					.modal-footer
+						a.btn.btn-danger#tambah(type='button', href='infrastructure/delete/'+data._id) Yes
+						button.btn.btn-primary(type='button', data-dismiss='modal') No
+				// /.modal-content
+			// /.modal-dialog
+		// /.modal
+
+	.modal.fade(id='create',tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+		.modal-dialog(style="width: 700px;")
+			.modal-content
+				.modal-header
+					h2
+						b Create Employee
+					button.close(type="button", data-dismiss="modal")
+						span(aria-hidden="true")
+							i.fas.fa-window-close
+						span.sr-only close
+				.modal-body
+					form.form-validation(role="form", action='/web/v1/employees/insert', enctype='multipart/form-data', method='post', accept=".jpg, .jpeg, .png")
+						.form-group.row
+							label.col-sm-4.form-control-label(for="inputEmail3") Family Card ID
+								span.text-danger *
+							.col-sm-8
+								input.form-control(type="text", name="family_card_id", required="required", placeholder="Family Card ID")
+						.form-group.row
+							label.col-sm-4.form-control-label(for="inputEmail3") National ID
+								span.text-danger *
+							.col-sm-8
+								input.form-control(type="text", name="national_id", required="required", placeholder="National ID")
+						.form-group.row
+							label.col-sm-4.form-control-label(for="hori-pass1") Name
+								span.text-danger *
+							.col-sm-8
+								input.form-control(type="text", name="name", required="required", placeholder="Name")
+						.form-group.row
+							label.col-sm-4.form-control-label(for="hori-pass1") Place Of Birth
+								span.text-danger *
+							.col-sm-8
+								input.form-control(type="text", name="place_of_birth", required="required", placeholder="Place Of Birth")
+						.form-group.row
+							label.col-sm-4.form-control-label(for="hori-pass1") Date of Birth
+								span.text-danger *
+							.col-sm-8
+								input.form-control(type="date", name="date_of_birth", required="required", placeholder="Date Of Birth")
+						.form-group.row
+							label.col-sm-4.form-control-label(for="hori-pass1") Gender
+								span.text-danger *
+							.col-sm-8 
+								label.form-radio-label
+									input.form-radio-input(type="radio", name="gender", value='male')
+									span.form-radio-sign 
+									| Male
+								label.form-radio-label.ml-3
+									input.form-radio-input(type="radio", name="gender", value='female')
+									span.form-radio-sign 
+									| Female
+						.form-group.row
+							label.col-sm-4.form-control-label(for="exampleFormControlInput1") 
+								| Religion
+								span.text-danger *
+							.col-sm-8
+								select.form-control(name="religion", id='', required="required")
+									option(value='') -- Religion --
+									option(value="Islam") Islam
+									option(value="Protestan") Protestan
+									option(value="Katolik") Katolik
+									option(value="Hindu") Hindu
+									option(value="Budha") Budha
+									option(value="Khonghucu") Khonghucu
+						.form-group.row
+							label.col-sm-4.form-control-label(for="exampleFormControlInput1") 
+								| Email
+								span.text-danger *
+							.col-sm-8
+								input.form-control(type="text", name="email", required="required", placeholder="Email")
+						.form-group.row
+							label.col-sm-4.form-control-label(for="exampleFormControlInput1") 
+								| Phone
+								span.text-danger *
+							.col-sm-8
+								input.form-control(type="text", name="phone", required="required", placeholder="Phone")
+						.form-group.row
+							label.col-sm-4.form-control-label.form-label(for="formFile") Photo
+							.col-sm-8
+								input#formFile.form-control(type="file", name='photo')
+						.form-group.row
+							label.col-sm-4.form-control-label(for="exampleFormControlInput1") 
+								| Address
+								span.text-danger *
+							.col-sm-8
+								//- input.form-control(type="text", name="address", required="required", placeholder="Address")
+								textarea#adress.form-control(rows='5', name='address', required)
+						.form-group.row
+							label.col-sm-4.form-control-label(for="exampleFormControlInput1") 
+								| Last Education
+								span.text-danger *
+							.col-sm-8
+								select.form-control(name="last_education", id='', required="required")
+									option(value='') -- Last Education --
+									option(value="SMA/SMK") SMA/SMK
+									option(value="D3") D3
+									option(value="S1") S1
+									option(value="S2") S2
+									option(value="Lainnya") Lainnya
+						.form-group.row
+							label.col-sm-4.form-control-label(for="exampleFormControlInput1") 
+								| Major
+								span.text-danger *
+							.col-sm-8
+								input.form-control(type="text", name="major", required="required", placeholder="Major")
+						hr
+						.form-group.row
+							label.col-sm-4.form-control-label(for="inputEmail3") Employee ID
+								span.text-danger *
+							.col-sm-8
+								input.form-control(type="text", name="employee_id", required="required", placeholder="Employee ID")
+						.form-group.row
+							label.col-sm-4.form-control-label(for="exampleFormControlInput1") 
+								| Position
+								span.text-danger *
+							.col-sm-8
+								select.form-control(name="position", id='', required="required")
+									option(value='') -- Position --
+									option(value="Project Manager") Project Manager
+									option(value="Staff") Staff
+									option(value="Team Leader") Team Leader
+						.form-group.row
+							label.col-sm-4.form-control-label(for="exampleFormControlInput1") 
+								| Division
+								span.text-danger *
+							.col-sm-8
+								//- select#example2
+								//- 	option#data_analyst one
+								//- 	option#drone_operator two
+								select#divisions.form-control(name="division", required="required")
+									option(value='') -- Division --
+									option#data_analyst(value="Data Analyst") Data Analyst
+									option#drone_operator(value="Drone Operator") Drone Operator
+									option#field_operator(value="Field Operator") Field Operator
+									option#finance(value="Finance") Finance
+									option#hardware(value="Hardware") Hardware
+									option#hrd(value="Human Resource Development") Human Resource Development
+									option#manufacture(value="Manufacture") Manufacture
+									option#marketing(value="Marketing") Marketing
+									option#pm(value="Project Manager") Project Manager
+									option#software(value="Software") Software
+									option#surveyor(value="Surveyor") Surveyor
+						.form-group.row
+							label.col-sm-4.form-control-label(for="exampleFormControlInput1") 
+								| jobdesc
+								span.text-danger *
+							.col-sm-8
+								select#child_data_analyst.form-control.groups(name="jobdesc", required="required")
+									option(value='') -- jobdesc --
+									option(value="Agricultural Analyst") Agricultural Analyst
+									option(value="Geospatial Analyst") Geospatial Analyst 
+
+								select#child_drone_operator.form-control.groups(name="jobdesc", required="required")
+									option(value='') -- jobdesc --
+									option(value="GCS") GCS
+									option(value="Pilot") Pilot
+								
+								select#child_field_operator.form-control.groups(name="jobdesc", required="required")
+									option(value='') -- jobdesc --
+									option(value="KANS") KANS
+								
+								select#child_finance.form-control.groups(name="jobdesc", required="required")
+									option(value='') -- jobdesc --
+									option(value="Finance") Finance
+
+								select#child_hardware.form-control.groups(name="jobdesc", required="required")
+									option(value='') -- jobdesc --
+									option(value="Communication") Communication
+									option(value="Electrical") Electrical
+
+								select#child_hrd.form-control.groups(name="jobdesc", required="required")
+									option(value='') -- jobdesc --
+									option(value="Human Resource Development") Human Resource Development
+
+								select#child_manufacture.form-control.groups(name="jobdesc", required="required")
+									option(value='') -- jobdesc --
+									option(value="Manufacture Drone") Manufacture Drone
+									option(value="Manufacture IoT") Manufacture IoT
+								
+								select#child_marketing.form-control.groups(name="jobdesc", required="required")
+									option(value='') -- jobdesc --
+									option(value="Marketing") Marketing 
+								
+								select#child_pm.form-control.groups(name="jobdesc", required="required")
+									option(value='') -- jobdesc --
+									option(value="Project Manager") Project Manager 
+								
+								select#child_software.form-control.groups(name="jobdesc", required="required")
+									option(value='') -- jobdesc --
+									option(value="Backend Developer") Backend Developer
+									option(value="Devops") Devops
+									option(value="Frontend Developer") Frontend Developer
+									option(value="Mobile Developer") Mobile Developer
+									option(value="Quality Assurance") Quality Assurance
+									option(value="UI/UX") UI/UX
+
+								select#child_surveyor.form-control.groups(name="jobdesc", required="required")
+									option(value='') -- jobdesc --
+									option(value="GIS Lapangan") GIS Lapangan 
+
+						.form-group.row
+							label.col-sm-4.form-control-label(for="exampleFormControlInput1") 
+								| Company
+								span.text-danger *
+							.col-sm-8
+								select.form-control(name="company", id='', required="required")
+									option(value='') -- Company --
+									option(value="Beehive Drones") Beehive Drones
+									option(value="Lumbung Muncul Sejahtera") Lumbung Muncul Sejahtera
+									option(value="Group") Group
+						.form-group.row
+							label.col-sm-4.form-control-label(for="hori-pass1") Join Date
+								span.text-danger *
+							.col-sm-8
+								input.form-control(type="date", name="join_date", required="required", placeholder="Join Date")
+						.form-group.row
+							label.col-sm-4.form-control-label(for="exampleFormControlInput1") 
+								| Employee Status
+								span.text-danger *
+							.col-sm-8
+								select.form-control(name="employee_status", id='', required="required")
+									option(value='') -- Employee Status --
+									option(value="Freelancer") Freelancer
+									option(value="Kontrak 1 Tahun") Kontrak 1 Tahun
+									option(value="Kontrak 6 Bulan") Kontrak 6 Bulan
+									option(value="Kontrak 3 Bulan") Kontrak 3 Bulan
+									option(value="Tetap") Tetap
+						hr
+						.form-group.row
+							label.col-sm-4.form-control-label(for="inputEmail3") BPJS Kesehatan ID
+								span.text-danger *
+							.col-sm-8
+								input.form-control(type="text", name="bpjs_kesehatan_id", required="required", placeholder="BPJS Kesehatan ID")
+						.form-group.row
+							label.col-sm-4.form-control-label(for="inputEmail3") BPJS Ketenagakerjaan ID
+								span.text-danger *
+							.col-sm-8
+								input.form-control(type="text", name="bpjs_ketenagakerjaan_id", required="required", placeholder="BPJS Ketenagakerjaan ID")
+						.form-group.row
+							label.col-sm-4.form-control-label(for="inputEmail3") Account Bank BNI
+								span.text-danger *
+							.col-sm-8
+								input.form-control(type="text", name="account_bni", required="required", placeholder="Account Bank BNI")
+						.form-group.row
+							.col-sm-12.col-sm-offset-4
+								button.btn.btn-primary.waves-effect.waves-light.float-right(type="submit")
+									| Submit
+
+	//- script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js")
+	script.
+		$(document).ready(function () {
+			//- $("#example2").on('change', function () {
+			//- 	var id = $(this).find('option:selected').attr('id');
+			//- 	console.log({id})
+			//- 	alert(id)
+			//- });
+
+			$('.groups').hide();
+			$('#child_data_analyst').show();
+			//- $('#drone_operator').hide();
+			$("#divisions").on('change', function () {
+				$('.groups').hide();
+				var id = $(this).find('option:selected').attr('id');
+				//- alert(id)
+				$('#child_'+id).show();
+			})
+		});

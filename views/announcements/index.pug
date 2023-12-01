@@ -1,0 +1,112 @@
+extends ../layouts/base
+
+block content
+	.content
+		.page-inner
+			.page-header
+				h4.page-title Announcements
+				ul.breadcrumbs
+					li.nav-home
+						a(href="/web/v1/dashboard")
+							i.flaticon-home
+					li.separator
+						i.flaticon-right-arrow
+					li.nav-item
+						a(href="#") Announcements
+			.row
+				.col-md-12
+					.card
+						.card-header
+							.row 
+								.col-lg-12
+									.d-flex.align-items-center
+										h4.card-title Announcements
+										a.button.btn.btn-dark.btn-round.ml-auto(data-original-title="Create Announcement", data-toggle='modal', href='', data-target='#create')
+											i.fa.fa-plus
+											| 
+											| Create
+						.card-body
+							.table-responsive
+								table#basic-datatables.display.table.table-striped.table-hover
+									thead
+										tr
+											th No
+											th Title
+											th Description
+											th Date 
+											th Action
+									tbody
+										//- each data in datas
+										//- 	tr
+										//- 		td #{no++}
+										//- 		td(style="color: #1F3BB3;") #{data.username}
+										//- 		td #{data.name}
+										//- 		td #{data.email}
+										//- 		td #{data.phone}
+										//- 		td(style="text-align: center;")
+										//- 			if data.role == 'perangkat_desa'
+										//- 				span.badge.badge-primary Perangkat Desa
+										//- 			else if data.role == 'dukuh'
+										//- 				span.badge.badge-success Enumator
+										//- 			else if data.role == 'ketua_padukuhan'
+										//- 				span.badge.badge-warning Dukuh
+										//- 			else if data.role == 'lurah'
+										//- 				span.badge.badge-secondary Lurah
+										//- 		td(style="text-align: center;")
+										//- 			if data.status == 'inactive'
+										//- 				span.badge.badge-danger Tidak Aktif
+										//- 			else if data.status == 'active'
+										//- 				span.badge.badge-success Aktif
+										
+										tr 
+											td 1
+											td Townhall
+											td Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.
+											td 
+												small Wednesday, 20 September 2023
+											td.d-none.d-md-table-cell
+												button.btn.btn-lg.btn-outline-dark.dropdown-toggle(data-toggle="dropdown", href="#", aria-expanded="false")
+													| Action
+												ul.dropdown-menu
+													li
+														a.dropdown-item(href='/web/v1/projects/detail?_id=87654321') Edit
+														
+													li 
+														a.dropdown-item(href="/web/v1/projects/task?_id=87654321") Delete
+
+	.modal.fade(id='create',tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+		.modal-dialog(style="width: 600px;")
+			.modal-content
+				.modal-header
+					h2
+						b Create New Announcement
+					button.close(type="button", data-dismiss="modal")
+						span(aria-hidden="true")
+							i.fas.fa-window-close
+						span.sr-only close
+				.modal-body
+					form(action='/topografi/create', enctype='multipart/form-data', method='post')
+						.form-group
+							label(for="exampleFormControlInput1") 
+								| Title
+								span.text-danger *
+							input.form-control(type="text", name="title", required="required", placeholder="Title")
+						.form-group
+							label(for="exampleFormControlInput1") 
+								| Date
+								span.text-danger *
+							#datetimepicker1.input-group.date
+								input.form-control(type="text")
+								span.fas.fa-calendar
+						.form-group
+							label(for="exampleFormControlInput1") 
+								| Description
+								span.text-danger *
+							textarea#description.form-control(rows='5', name='description', placeholder="Description")
+						.form-group
+							button.btn.btn-primary.waves-effect.waves-light.float-right(type="submit") Create
+	
+	script.
+		$(function () {
+			$('#datetimepicker1').datetimepicker();
+		});

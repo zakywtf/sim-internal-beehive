@@ -1,74 +1,28 @@
 const apiResponse = require("../helpers/apiResponse");
 const mailer = require("../helpers/nodeMailer");
 const Users = require("../schemas/users");
-const CatServices = require("../schemas/category_services");
-const Careers = require("../schemas/careers");
+const TestJson = require("../schemas/test_json");
 
-const { generate } = require("../helpers/randGen")
+const { generate } = require("../helpers/randGen");
+const { detailEmail } = require("../helpers/sendEmail")
 
 const IndexController = {
 
     index: async (req, res) => {
-        const services = await CatServices.find({ isDeleted: false })
         const active_menu = 'home'
         const head_title = 'Beehive Drones: Best Drone System Provider Company'
 
-        res.render('public/home/index', { head_title, active_menu, services });
+        res.render('account-pages/login');
     },
 
-    service: async (req, res) => {
-        const services = await CatServices.find({ isDeleted: false })
-        const active_menu = 'service'
-        switch (req.params.category) {
-            case 'agriculture':
-                var head_title = 'Best Drone Service for Agriculture | Beehive Drones'
-                break;
-            case 'forestry':
-                var head_title = 'Best Drone Service for Forestry | Beehive Drones'
-                break;
-            case 'logistics':
-                var head_title = 'Best Drone Service for Navier | Beehive Drones'
-                break;
-        
-            default:
-                break;
-        }
+    dashboard: async (req, res) => {
+        const active_menu = 'home'
+        const head_title = 'Beehive Drones: Best Drone System Provider Company'
 
-        res.render('public/service/' + req.params.category, { head_title, active_menu, services });
+        res.render('dashboard/index');
     },
 
-    blog: async (req, res) => {
-        const services = await CatServices.find({ isDeleted: false })
-        const active_menu = 'blog'
-        const head_title = 'Information About Technology and Business | Beehive Drones'
-
-        res.render('public/blog/index', { head_title, active_menu, services });
-    },
-
-    career: async (req, res) => {
-        const services = await CatServices.find({ isDeleted: false })
-        const careers = await Careers.find({})
-        const active_menu = 'career'
-        const head_title = 'Beehivedrones Job Vacancies, Check Out the Position!'
-
-        res.render('public/career/index', { head_title, active_menu, services, careers });
-    },
-
-    book_appointment: async (req, res) => {
-        const services = await CatServices.find({ isDeleted: false })
-        const active_menu = ''
-        const head_title = 'Book Appoinment | Beehive Drones'
-
-        res.render('public/book_appointment/index', { head_title, active_menu, services });
-    },
-
-    detail_service: async (req, res) => {
-        const services = await CatServices.find({ isDeleted: false })
-        const active_menu = 'service'
-        const head_title = 'Get Drone Aerial Analysis Services | Beehive Drones'
-
-        res.render('public/service/detail/' + req.params.title, { head_title, active_menu, services });
-    },
+    
 
     // ==========================================================================================================================================
 
@@ -79,7 +33,7 @@ const IndexController = {
     contactUs: async (req, res, next) => {
         const mailOptions = {
             from: req.body.name + ' <' + req.body.email + '>',
-            to: 'contact@idepreneursclub.org',
+            to: 'novazaky1@gmail.com',
             subject: "Enquiry from " + req.body.name,
             text: req.body.message,
             html: `
@@ -112,6 +66,27 @@ const IndexController = {
         const rand = generate(80, false)
         return apiResponse.successResponseWithData(res, 'Random String', rand);
     },
+
+    testJson: async (req, res) => {
+        console.log({body: req.body})
+        const obj = req.body
+        const string = JSON.stringify(obj)
+        const input = {
+            json: string 
+        }
+        const data = await TestJson.create(input)
+        return apiResponse.successResponseWithData(res, 'Success', data);
+    },
+
+    testSendEmail: async (req, res) => {
+        const dataEmail = {
+            name: "zaky",
+            email: "novazaky1@gmail.com",
+            password: "123456"
+        }
+        await detailEmail('send-password', dataEmail)    
+
+    }
 
     // serviceLandCharacteristic: async (req, res) => {
     //     const data = await serviceLandCharacteristic(req.query.village_id)

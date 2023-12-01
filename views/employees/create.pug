@@ -1,0 +1,92 @@
+extends ../layouts/base
+
+block content
+	.content
+		.page-inner
+			.page-header
+				h4.page-title Employees
+				ul.breadcrumbs
+					li.nav-home
+						a(href="#")
+							i.flaticon-home
+					li.separator
+						i.flaticon-right-arrow
+					li.nav-item
+						a(href="/web/v1/employees") Employees
+					li.separator
+						i.flaticon-right-arrow
+					li.nav-item
+						a(href="#") Create Employee
+			.row
+				.col-md-6
+					.card
+						.card-header
+							.d-flex.align-items-center
+								h4.card-title Create Employees
+						.card-body
+							.row 
+								.col-lg-12
+									//- .container
+									form(action='/web/v1/employees/insert', enctype='multipart/form-data', method='post', accept=".jpg, .jpeg, .png")
+										.form-group
+											label(for="exampleFormControlInput1") 
+												| National ID
+												span.text-danger *
+											input.form-control(type="text", name="national_id", required="required", placeholder="National ID")
+										.form-group
+											label(for="exampleFormControlInput1") 
+												| Name
+												span.text-danger *
+											input.form-control(type="text", name="name", required="required", placeholder="Name")
+										.form-group
+											label(for="exampleFormControlInput1") 
+												| Date of Birth
+												span.text-danger *
+											input.form-control(type="text", name="name", required="required", placeholder="Name")
+										.form-group
+											label(for="exampleFormControlInput1") 
+												| Gender
+												span.text-danger *
+											select.form-control(name="family_category", id='', required="required")
+												option(value='') -- Gender --
+												option(value="Male") Male
+												option(value="Female") Female 
+										.form-group
+											label(for="exampleFormControlInput1") 
+												| Email
+												span.text-danger *
+											input.form-control(type="text", name="email", required="required", placeholder="Email")
+										.form-group
+											label(for="exampleFormControlInput1") 
+												| Phone
+												span.text-danger *
+											input.form-control(type="text", name="phone", required="required", placeholder="Phone")
+										.form-group
+											label(for="exampleFormControlInput1") 
+												| Address
+												span.text-danger *
+											//- input.form-control(type="text", name="address", required="required", placeholder="Address")
+											textarea#adress.form-control(rows='5', name='address', required)
+										.form-group
+											label(for="exampleFormControlInput1") 
+												| Position
+												span.text-danger *
+											select.form-control(name="family_category", id='', required="required")
+												option(value='') -- Position --
+												option(value="Data Analyst") Data Analyst
+												option(value="Drone Operator") Drone Operator
+												option(value="Field Operator") Field Operator
+												option(value="Finance") Finance
+												option(value="Hardware") Hardware
+												option(value="Human Resource Development") Human Resource Development
+												option(value="Manufacture") Manufacture
+												option(value="Marketing") Marketing
+												option(value="Project Manager") Project Manager
+												option(value="Software") Software
+												option(value="Surveyor") Surveyor
+										//- .form-group
+										//- 	label(for="description") Keterangan
+										//- 	textarea#description.form-control(rows="12", name="description", style="height: 200px;")
+										.form-group
+											button.btn.btn-info.float-right(type="submit") Submit
+											

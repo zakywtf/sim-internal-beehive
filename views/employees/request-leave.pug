@@ -1,0 +1,246 @@
+extends ../layouts/base
+
+block content
+	.content
+		.page-inner
+			.page-header
+				h4.page-title Request Leave
+				ul.breadcrumbs
+					li.nav-home
+						a(href="#")
+							i.flaticon-home
+					li.separator
+						i.flaticon-right-arrow
+					li.nav-item
+						a(href="#") Request Leave
+			br
+			.row
+				.col-lg-6
+					.row
+						.col-md-4
+							.card.card-dark.card-round.bg-dark-gradient
+								.card-body.skew-shadow
+									h1 70
+									h5.op-8 Attendance
+						.col-md-4
+							.card.card-dark.card-round.bg-dark-gradient
+								.card-body.bubble-shadow
+									h1 5
+									h5.op-8 Leaves
+						.col-md-4
+							.card.card-dark.card-round.bg-dark-gradient
+								.card-body.skew-shadow
+									h1 7
+									h5.op-8 Remaining Days Off
+					.row 
+						.col-lg-12
+							.card.flex-fill
+								.card-body.d-flex
+									#calendar
+				.col-lg-6
+					.row 
+						.col-lg-12
+							.card 
+								.card-header 
+									.card-head-row
+										.card-title Notif Boards
+								.card-body
+									.row 
+										.col-sm-12
+											.card.card-stats.card-round.notice-board
+												.card-body
+													.row.align-items-center
+														.col-sm-12
+															.col.col-stats.ml-3.ml-sm-0
+																.numbers
+																	h4.card-title Townhall
+																	small 22 November 2023
+																	br
+																	br
+																	p.card-category Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.
+									.row 
+										.col-sm-12
+											.card.card-stats.card-round.notice-board
+												.card-body
+													.row.align-items-center
+														.col-sm-12
+															.col.col-stats.ml-3.ml-sm-0
+																.numbers
+																	h4.card-title Townhall
+																	small 22 November 2023
+																	br
+																	br
+																	p.card-category Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi
+					.row 
+						.col-lg-12
+							.card 
+								.card-header 
+									.card-head-row
+										.card-title Upcoming Holiday
+								.card-body
+									.upcoming-holiday
+										strong 22 November 2023
+										p Indicates a dangerous or potentially negative action.
+			//-  MODAL SCHEDULE
+			#createEventModal.modal.fade
+				.modal-dialog
+					.modal-content
+						.modal-header
+							h3 
+								b Create Schedule
+							button.close(type="button", data-dismiss="modal")
+								span(aria-hidden="true")
+									i.fas.fa-window-close
+								span.sr-only close
+						#modalBody.modal-body
+							.form-group
+								label
+									| Name
+									span.text-danger *
+								input#user_id.form-control(type="hidden", value = session.user_id, required)
+								input#name.form-control(type="text", value = session.name, disabled)
+							.form-group
+								label
+									| Type Of Permit
+									span.text-danger *
+								select#chemical.select2.form-control(name="chemical")
+									option(value="pupuk") Terlambat masuk (antara pkl 8.16-8.30 WIB)
+									option(value="insectisdia") Ijin untuk keperluan pribadi di jam kerja (berangkat siang/pulang awal/ijin keluar di tengah jam kerja)
+									option(value="fungisida") Ijin tidak masuk kerja (1 hari) atau ijin sakit tanpa surat dokter
+									option(value="akarisida") Ijin keluar kantor untuk keperluan perusahaan (misal membeli barang)
+									option(value="bakterisida") Ijin sakit dengan Surat Keterangan Dokter / SKD - WAJIB melampirkan SKD di kolom bawah
+									option(value="moluskisida") WFH
+							.form-group
+								label
+									| Description
+									span.text-danger *
+								textarea#description.form-control(rows='5', name='description', required)
+								br
+								//- input(type="button", value="Delete", onclick="DeleteMarkers()")
+						.modal-footer
+							button.btn(data-dismiss="modal", aria-hidden="true") Cancel
+							button#submitButton.btn.btn-dark(type="submit") Save
+
+			#calendarModal.modal.fade
+				.modal-dialog
+					.modal-content
+						.modal-header
+							h3 
+								b Schedule Detail
+							button.close(type="button", data-dismiss="modal")
+								span(aria-hidden="true")
+									i.fas.fa-window-close
+								span.sr-only close
+						#modalBody.modal-body
+							h5 
+								b Name 
+							p#name_title
+							h5 
+								b Type Of Permit
+							p#type_permit
+
+	script.
+		var date = new Date();
+		var d = date.getDate();
+		var m = date.getMonth();
+		var y = date.getFullYear();
+		var form = '';
+		var today = new Date($.now());
+
+		var defaultEvents =  [
+			{
+				title: 'Nova Zaky Fathoni',
+				start: new Date($.now() + 158000000),
+				end: new Date($.now() + 238000000),
+				className: 'bg-dark',
+				description: {
+					type_permit: 'Ijin tidak masuk kerja (1 hari) atau ijin sakit tanpa surat dokter'
+				}
+			}, 
+			{
+				title: 'See John Deo',
+				start: today,
+				end: today,
+				className: 'bg-danger',
+				description: {
+					type_permit: 'Ijin tidak masuk kerja (1 hari) atau ijin sakit tanpa surat dokter'
+				}
+			}, 
+			{
+				title: 'See John dsadsa',
+				start:new Date(),
+				end: today,
+				className: 'bg-danger',
+				description: {
+					type_permit: 'Ijin tidak masuk kerja (1 hari) atau ijin sakit tanpa surat dokter'
+				}
+			},
+			{
+				title: 'Nova Zaky Fathoni',
+				start: new Date($.now() + 338000000),
+				className: 'bg-primary',
+				description: {
+					type_permit: 'Ijin tidak masuk kerja (1 hari) atau ijin sakit tanpa surat dokter'
+				}
+			}
+		];
+		$(document).ready(function() {
+			$('#calendar').fullCalendar({
+				events: defaultEvents,
+				editable: true,
+				eventLimit: true,
+				header: {
+					left: 'title',
+					center: '',
+					right: 'today prev,next'
+				},
+				navLinks: true, // can click day/week names to navigate views
+				displayEventTime: false,
+				eventRender: function (event, element, view) {
+					if (event.allDay === 'true') {
+						event.allDay = true;
+					} else {
+						event.allDay = false;
+					}
+				},
+				selectable: true,
+				select: function(start, end, jsEvent, view) {
+					// start contains the date you have selected
+					// end contains the end date. 
+					// Caution: the end date is exclusive (new since v2).
+					//- var allDay = !start.hasTime() && !end.hasTime();
+					//- alert(["Event Start date: " + moment(start).format(),
+					//- 		"Event End date: " + moment(end).format(),
+					//- 		"AllDay: " + allDay].join("\n"));
+					sessionStorage.setItem('start_date', start.toISOString());
+					sessionStorage.setItem('end_date', end.toISOString());
+					$('#createEventModal').modal('show');
+				},
+				eventDrop: function (event, delta, revertFunc) {
+
+				},
+
+				//When u resize an event in the calendar do the following:
+				eventResize: function (event, delta, revertFunc) {
+					//do something when event is resized
+				},
+
+				eventRender: function(event, element) {
+					$(element).tooltip({title: event.title});             
+				},
+
+				//Activating modal for 'when an event is clicked'
+				eventClick: function (event) {
+					console.log({event})
+					var date = new Date(event.start._d);
+					var d = date.getDate();
+					var m = date.getMonth();
+					var y = date.getFullYear();
+					const start_date = d+'-'+m+'-'+y
+					$('#name_title').html(`${event.title}`);
+					$('#type_permit').html(`${event.description.type_permit}`);
+
+					$('#calendarModal').modal();
+				},
+			});
+		});

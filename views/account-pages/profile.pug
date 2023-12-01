@@ -1,0 +1,105 @@
+extends ../layouts/base
+
+block content
+	.content
+		.page-inner
+			.page-header
+				h4.page-title My Profile
+				ul.breadcrumbs
+					li.nav-home
+						a(href="#")
+							i.flaticon-home
+					li.separator
+						i.flaticon-right-arrow
+					li.nav-item
+						a(href="#") My Profile
+			.row
+				.col-md-12 
+					.card.card-post.card-round
+						.card-header(style="background-image: url('/assets/images/agriculture-bg.png'); height: 400px; width:100%")
+						.card-body
+							br
+							.row
+								.col-lg-6
+									.row 
+										.col-lg-12
+											.container
+												.d-flex
+													.avatar.avatar-xxl
+														img.avatar-img.rounded-circle(src="/assets/images/"+session.photo, alt="...")
+													.info-post(style="margin-left: 2%;")
+														br
+														h2 #{session.name}
+														h4 #{session.role}
+														h6 NIK. #{session.employee_id}
+												br
+												br
+												h3 
+													b Personal Detail
+												.separator-dashed
+												.row 
+													.col-lg-3 
+														h5 
+															b National Id 
+													.col-lg-9 12123242432444423
+												.row 
+													.col-lg-3 
+														h5 
+															b Name
+													.col-lg-9 Nova Zaky Fathoni
+												.row 
+													.col-lg-3 
+														h5 
+															b Date of Birth
+													.col-lg-9 20 November 1996
+												.row 
+													.col-lg-3 
+														h5 
+															b Gender 
+													.col-lg-9 Male
+												.row 
+													.col-lg-3 
+														h5 
+															b Email
+													.col-lg-9 zakywtf@gmail.com
+												.row 
+													.col-lg-3 
+														h5 
+															b Phone
+													.col-lg-9 093967910925
+												.row 
+													.col-lg-3 
+														h5 
+															b Address
+													.col-lg-9 Klumpit, Tepus, Gunungkidul, Yogyakarta, 55881
+									br
+									br
+								.col-lg-6
+									.row 
+										.col-lg-12
+											h2 Attendances
+											.row
+												.col-md-4
+													.card.card-dark.card-round.bg-dark-gradient
+														.card-body.skew-shadow
+															h1 70
+															h5.op-8 Attendance
+												.col-md-4
+													.card.card-dark.card-round.bg-dark-gradient
+														.card-body.bubble-shadow
+															h1 5
+															h5.op-8 Leaves
+												.col-md-4
+													.card.card-dark.card-round.bg-dark-gradient
+														.card-body.skew-shadow
+															h1 7
+															h5.op-8 Remaining Days Off
+								
+									.row 
+										.col-lg-12
+											h2 Leaves
+											.row 
+												.col-lg-12
+													.upcoming-holiday
+														strong 22 November 2023
+														p Indicates a dangerous or potentially negative action.

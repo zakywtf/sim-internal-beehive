@@ -1,0 +1,108 @@
+extends ../layouts/base
+
+block content
+	.content
+		.page-inner
+			.page-header
+				h4.page-title Chats
+				ul.breadcrumbs
+					li.nav-home
+						a(href="#")
+							i.flaticon-home
+					li.separator
+						i.flaticon-right-arrow
+					li.nav-item
+						a(href="#") Chats
+			.row
+				.col-md-9(style="margin-left: 5%; margin-top:30px;")
+					.row
+						.discussions
+							.discussion.search
+								.searchbar
+									i.fa.fa-search(aria-hidden="true")
+									input(type="text", placeholder="Search...")
+							.discussion.message-active
+								.photo(style="background-image: url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80);")
+									.online
+								.desc-contact
+									p.name Megan Leib
+									p.message 9 pm at the bar if possible 😳
+								.timer 12 sec
+							.discussion
+								.photo(style="background-image: url(http://e0.365dm.com/16/08/16-9/20/theirry-henry-sky-sports-pundit_3766131.jpg?20161212144602);")
+									.online
+								.desc-contact
+									p.name Dave Corlew
+									p.message Let&apos;s meet for a coffee or something today ?
+								.timer 3 min
+							.discussion
+								.photo(style="background-image: url(https://images.unsplash.com/photo-1497551060073-4c5ab6435f12?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=667&q=80);")
+								.desc-contact
+									p.name Jerome Seiber
+									p.message I&apos;ve sent you the annual report
+								.timer 42 min
+							.discussion
+								.photo(style="background-image: url(http://thomasdaubenton.xyz/portfolio/images/photo.jpg);")
+									.online
+								.desc-contact
+									p.name Thomas Dbtn
+									p.message See you tomorrow ! 🙂
+								.timer 2 hour
+							.discussion
+								.photo(style="background-image: url(https://images.unsplash.com/photo-1553514029-1318c9127859?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80);")
+								.desc-contact
+									p.name Elsie Amador
+									p.message What the f**k is going on ?
+								.timer 1 day
+							.discussion
+								.photo(style="background-image: url(https://images.unsplash.com/photo-1541747157478-3222166cf342?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=967&q=80);")
+								.desc-contact
+									p.name Billy Southard
+									p.message Ahahah 😂
+								.timer 4 days
+							.discussion
+								.photo(style="background-image: url(https://images.unsplash.com/photo-1435348773030-a1d74f568bc2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80);")
+									.online
+								.desc-contact
+									p.name Paul Walker
+									p.message You can&apos;t see me
+								.timer 1 week
+						.chat
+							.header-chat
+								.user-box
+									.avatar-sm
+										img.avatar-img.rounded-circle(src="/assets/images/avatar_default.png", alt="image profile")
+								p.name Megan Leib
+							.messages-chat
+								.wrapper-messages-chat
+									.message
+										p.text  Hi, how are you ? 
+									.message 
+										p.text  What are you doing tonight ? Want to go take a drink ?
+									p.time  14h58
+									.message.text-only
+										.response
+											p.text  Hey Megan ! It&apos;s been a while 😃
+									.message.text-only
+										.response
+											p.text  When can we meet ?
+									p.response-time.time  15h04
+									.message
+										p.text  9 pm at the bar if possible 😳
+									p.time  15h09
+									.message
+										p.text  9 pm at the bar if possible 😳
+									p.time  15h09
+									.message
+										p.text  9 pm at the bar if possible 😳
+									p.time  15h09
+									.message
+										p.text  9 pm at the bar if possible 😳
+									p.time  15h09
+									.message
+										p.text  9 pm at the bar if possible 😳
+									p.time  15h09
+							.footer-chat
+								i.icon.fa.fa-smile-o.clickable(style="font-size:25pt;", aria-hidden="true")
+								input.write-message(type="text", placeholder="Type your message here")
+								i.icon.send.fas.fa-paper-plane.clickable(aria-hidden="true")

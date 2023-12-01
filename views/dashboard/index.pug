@@ -1,0 +1,581 @@
+extends ../layouts/base
+
+block content
+	.content
+		.panel-header
+			.page-inner.py-5
+				.d-flex.align-items-left.align-items-md-center.flex-column.flex-md-row
+					div
+						h2.text-black.pb-2.fw-bold Dashboard
+						h5.text-black.op-7.mb-2 Welcome, 
+							b #{session.name}!
+							|
+							| This is your summary
+					//- .ml-md-auto.py-2.py-md-0
+					//- 	a.btn.btn-secondary.btn-round(href="/test/download")
+					//- 		span.btn-label
+					//- 			i.fas.fa-cloud-download-alt
+					//- 		| 
+					//- 		| Download
+		.page-inner.mt--5
+			.row
+				.col-lg-4
+					.row 
+						.col-lg-12
+							.card
+								.card-header.bg-dark-gradient.bubble-shadow.text-white(style="height:260px;")
+									h3 Timesheet
+									.separator-dashed
+									.row 
+										.col-md-7
+											span
+												i.fas.fa-map-pin 
+													| 
+													| Location
+											h6 Klumpit, Tepus, Gunungkidul, Yogyakarta, 55881
+										.col-md-5
+											span
+												i.fas.fa-calendar
+													| 
+													| Date Now
+											h6 #{dateNow}
+									br
+									.row
+										.col-md-4
+											.px-2.pb-2.pb-md-0.text-center
+												.fw-bold.mt-3.mb-0 Clock In
+												small#clock_in #{clock_in}
+										.col-md-4
+											.px-2.pb-2.pb-md-0.text-center
+												.fw-bold.mt-3.mb-0 Break
+												small#breaks #{breaks}
+										.col-md-4
+											.px-2.pb-2.pb-md-0.text-center
+												.fw-bold.mt-3.mb-0 Clock Out
+												small#clock_out #{clock_out}
+									br
+								//- .card-body
+								//- 	.user-profile.text-center
+								//- 		br
+								//- 		.row
+								//- 			.col-lg-12.d-flex.flex-column.justify-content-around
+								//- 				.d-flex.flex-wrap.justify-content-around
+								//- 					.text-center
+								//- 						h2 Total Hours
+								//- 						br
+								//- 						#hours
+								//- 		//- .job Frontend Developer
+								//- 		//- .desc Friday, 22 September 2023
+								//- 		br
+								//- 		br
+								.card-footer.card-profile
+									.row.user-stats.text-center
+										.col-sm-4
+											//- a.btn.btn-dark.btn-lg.btn-link(href="/web/v1/dashboard/create/clock_in")
+											a.btn.btn-dark.btn-lg.btn-link(href="#", onclick="openPopupCamera()")
+												span.btn-label.just-icon
+													i.fas.fa-sign-in-alt
+										.col-sm-4
+											//- a.btn.btn-dark.btn-lg.btn-link(href="/web/v1/dashboard/create/break")
+											a.btn.btn-dark.btn-lg.btn-link(href="#", onclick="submitBreak()")
+
+													span.btn-label.just-icon
+														i.fas.fa-coffee
+										.col-sm-4
+											//- a.btn.btn-dark.btn-lg.btn-link(href="/web/v1/dashboard/create/clock_out")
+											a.btn.btn-dark.btn-lg.btn-link(href="#", onclick="submitClockOut()")
+												span.btn-label.just-icon
+													i.fas.fa-sign-out-alt
+					.row 
+						.col-lg-12
+							.card
+								.card-header
+									.card-title
+										span
+											i.far.fa-calendar-alt
+												| 
+												| New Schedules
+								.card-body
+									.card.p-3.new-schedule
+										.d-flex.align-items-center
+											span.stamp.stamp-md.bg-info.mr-3
+												i.fa.fa-calendar-check
+											div
+												h5.mb-1
+													b
+														a(href="#") Meeting IFRI 
+													small (22-10-2023, 09:00)
+												h5.mb-1 
+													| Meeting membahas rumus
+				.col-md-8
+					.row 
+						.col-lg-4
+							.card.card-stats.card-dark.card-round.bg-dark-gradient
+								.card-body.skew-shadow
+									.row
+										.col-5
+											.icon-big.text-center
+												i.flaticon-calendar
+										.col-7.col-stats
+											.numbers
+												p.card-category Total Project
+												h4.card-title 5
+						.col-lg-4
+							.card.card-stats.card-dark.card-round.bg-dark-gradient
+								.card-body.skew-shadow
+									.row
+										.col-5
+											.icon-big.text-center
+												i.flaticon-technology-1
+										.col-7.col-stats
+											.numbers
+												p.card-category Deadline
+												h4.card-title 3
+						.col-md-4
+							.card.card-stats.card-dark.card-round.bg-dark-gradient
+								.card-body.skew-shadow
+									.row
+										.col-5
+											.icon-big.text-center
+												i.flaticon-exclamation
+										.col-7.col-stats
+											.numbers
+												p.card-category Feedback
+												h4.card-title 10
+						//- .col-md-3
+						//- 	.card.card-stats.card-dark.card-round.bg-dark-gradient
+						//- 		.card-body.skew-shadow
+						//- 			.row
+						//- 				.col-5
+						//- 					.icon-big.text-center
+						//- 						i.flaticon-agenda-1
+						//- 				.col-7.col-stats
+						//- 					.numbers
+						//- 						p.card-category New Schedule
+						//- 						h4.card-title 1
+					.row 
+						.col-lg-8
+							.card
+								.card-header
+									.card-title
+										span
+											i.far.fa-chart-bar
+												| 
+												| Feature Statistic
+								.card-body
+									.chart-container(style="min-height: 300px")
+										canvas#statisticsChart
+									#myChartLegend
+						.col-lg-4 
+							.notes
+								.sticky
+									a(href="#", contenteditable)
+										h2 Title #1
+										p Text Content #1
+								.sticky
+									a(href="#", contenteditable)
+										h2 Title #1
+										p Text Content #1
+			.row 
+				.col-lg-5
+					
+				.col-lg-3
+				.col-lg-4
+
+			#takepicture.modal.fade
+				.modal-dialog
+					.modal-content
+						.modal-header
+							h3 
+								b Take Picture
+							button.close(type="button", data-dismiss="modal", onclick="stopCam()")
+								span(aria-hidden="true")
+									i.fas.fa-window-close
+								span.sr-only close
+						.modal-body
+							//- .row 
+							//- 	.col-lg-6
+							//- 		.container
+							//- 			button.btn.btn-submit#startBtn(onclick="openCam()") Open Webcam
+							.row 
+								.col-lg-6
+									.container
+										video#videoCam
+								.col-lg-6
+									.container 
+										input.picture-tag(type="hidden", name="picture")
+										#results Your captured image will appear here...
+							.row 
+								.col-lg-6
+									.container
+										button.btn.btn-primary(onClick="take_snapshot()") Take Picture
+
+								.col-lg-6
+									.container
+										#btnSubmitPicture
+										//- button.btn.btn-success(onClick="submitImage()") Submit
+
+					// /.modal-content
+				// /.modal-dialog
+			// /.modal
+
+			//- #banner.modal.fade
+			//- 	.modal-dialog
+			//- 		.modal-content
+			//- 			.modal-header
+			//- 				h3 
+			//- 					b Announcement
+			//- 				button.close(type="button", data-dismiss="modal", onclick="hideBanner()")
+			//- 					span(aria-hidden="true")
+			//- 						i.fas.fa-window-close
+			//- 					span.sr-only close
+			//- 			.modal-body
+			//- 				.row 
+			//- 					.col-lg-12
+			//- 						.container
+			//- 							//- img(src="/assets/images/agriculture-bg.png", alt="image", width='100%' style="display: block;")
+			//- 							h2 
+			//- 								b Townhall
+			//- 							small(style="color: #6db3db;") 22 November 2023
+			//- 							br
+			//- 							br
+			//- 							p Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.
+			//- 							br
+			//- 							br
+			//- 		// /.modal-content
+			//- 	// /.modal-dialog
+			//- // /.modal
+
+	script(src="/assets/js/plugin/chart.js/chart.min.js")
+	//- script(src="/assets/js/custom-chart.js")
+	script(src="/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js")
+	script(src="/assets/js/plugin/chart-circle/circles.min.js")
+	script(src='/assets/js/jquery.min.js')
+	script.
+
+		var videoDiv = document.getElementById("videoCam"),
+		vendorUrl = window.URL || window.webkitURL;
+		navigator.getMedia =    navigator.getUserMedia ||
+								navigator.webkitGetUserMedia ||
+								navigator.mozGetUserMedia ||
+								navigator.oGetUserMedia ||
+								navigator.msGetUserMedia;
+
+		var MediaStream;
+
+		function openPopupCamera() {
+			var disable_clockin = localStorage.getItem('disable_clockin')
+			if (!disable_clockin){
+				$('#takepicture').modal('show');
+
+				navigator.getMedia({
+					video: true,
+					audio: false
+				}, function(stream){
+					// videoDiv.src = vendorUrl.createObjectURL(stream);
+					videoDiv.srcObject = stream
+					videoDiv.onloadedmetadata = function(e) {
+						videoDiv.play();
+						Webcam.attach( '#videoCam' );
+					};
+					MediaStream = stream.getTracks()[0]; // create the stream tracker
+
+				}, function(error){
+					console.log(error)
+				}); 
+			}
+		};
+
+
+		function stopCam(){
+			MediaStream.stop()
+			Webcam.reset( '#videoCam' );
+			//- location.reload(); 
+		}
+
+		function submitImage(){
+			MediaStream.stop()
+			Webcam.reset( '#videoCam' );
+			window.localStorage.setItem('disable_clockin', 'true');
+			var base64 = $(".picture-tag").val();
+			console.log({base64})
+			$('#takepicture').modal('hide');
+			
+			var host = window.location.origin;
+
+			$.ajax({
+				type: "POST",
+				url: host + "/web/v1/dashboard/create/clock_in",
+				data: {
+					picture: base64
+				},
+				success: function(datas){
+					if (datas.success == 200) {
+						document.getElementById('clock_in').innerHTML = datas.data.clock_in
+						document.getElementById('clock_out').innerHTML = datas.data.clock_out
+						document.getElementById('breaks').innerHTML = datas.data.breaks
+					}
+				},
+				error: function(errMsg) {
+					console.log('New Error : '+errMsg);
+				}
+			});
+			//- location.reload(); 
+		}
+
+		function submitBreak(){
+			var host = window.location.origin;
+
+			$.ajax({
+				type: "GET",
+				url: host + "/web/v1/dashboard/create/break",
+				success: function(datas){
+					if (datas.success == 200) {
+						document.getElementById('clock_in').innerHTML = datas.data.clock_in
+						document.getElementById('clock_out').innerHTML = datas.data.clock_out
+						document.getElementById('breaks').innerHTML = datas.data.breaks
+					}
+				},
+				error: function(errMsg) {
+					console.log('New Error : '+errMsg);
+				}
+			});
+		}
+
+		function submitClockOut(){
+			var host = window.location.origin;
+
+			$.ajax({
+				type: "GET",
+				url: host + "/web/v1/dashboard/create/clock_out",
+				success: function(datas){
+					if (datas.success == 200) {
+						document.getElementById('clock_in').innerHTML = datas.data.clock_in
+						document.getElementById('clock_out').innerHTML = datas.data.clock_out
+						document.getElementById('breaks').innerHTML = datas.data.breaks
+					}
+				},
+				error: function(errMsg) {
+					console.log('New Error : '+errMsg);
+				}
+			});
+		}
+
+	script.
+		Webcam.set({
+			width: 300,
+			height: 250,
+			image_format: 'jpeg',
+			jpeg_quality: 60
+
+		});
+		//- Webcam.attach( '#my_camera' );
+
+		function take_snapshot() {
+			Webcam.snap( function(data_uri) {
+				//- $(".image-tag").val(data_uri);
+				var resize = resizedataURL(data_uri, 150, 130)
+				//- alert(resize)
+				document.getElementById('results').innerHTML = '<img src="'+data_uri+'" width="100%"/>';
+				document.getElementById('btnSubmitPicture').innerHTML = '<button class="btn btn-success float-right" onClick="submitImage()">Submit</button>';
+
+			} );
+
+		}
+
+		function resizedataURL(datas, wantedWidth, wantedHeight){
+			var img = document.createElement('img');
+			img.onload = async function(){
+				var canvas = document.createElement('canvas');
+				var ctx = canvas.getContext('2d');
+				canvas.width = wantedWidth;
+				canvas.height = wantedHeight;
+				ctx.drawImage(this, 0, 0, wantedWidth, wantedHeight);
+				var dataURI = canvas.toDataURL();
+				//- console.log({dataURI})
+				$(".picture-tag").val(dataURI);
+				//- document.getElementById('base64picture').innerHTML = dataURI
+				return dataURI;
+			};
+			img.src = datas;
+		}
+
+	script.
+		function hideBanner(){
+			console.log("onClose banner");
+			window.localStorage.setItem('hide_banner', 'true');
+			
+		}
+
+	script.
+		$(document).ready(function () {
+			all_notes = $(".sticky a");
+
+			all_notes.on("keyup", function () {
+				note_title = $(this).find("h2").text();
+				note_content = $(this).find("p").text();
+
+				item_key = "list_" + $(this).parent().index();
+
+				data = {
+					title: note_title,
+					content: note_content
+				};
+
+				window.localStorage.setItem(item_key, JSON.stringify(data));
+			});
+
+			all_notes.each(function (index) {
+				data = JSON.parse(window.localStorage.getItem("list_" + index));
+
+				if (data !== null) {
+					note_title = data.title;
+					note_content = data.content;
+
+					$(this).find("h2").text(note_title);
+					$(this).find("p").text(note_content);
+				}
+			});
+		});
+	script.
+		Circles.create({
+			id:'hours',
+			radius:45,
+			value:2.5,
+			maxValue:8.5,
+			width:7,
+			text: '2.5',
+			colors:['#f1f1f1', '#1a2035'],
+			duration:400,
+			wrpClass:'circles-wrp',
+			textClass:'circles-text',
+			styleWrapper:true,
+			styleText:true
+		})
+	
+	script.
+		function legendClickCallback(event) {
+			event = event || window.event;
+
+			var target = event.target || event.srcElement;
+			while (target.nodeName !== 'LI') {
+				target = target.parentElement;
+			}
+			var parent = target.parentElement;
+			var chartId = parseInt(parent.classList[0].split("-")[0], 10);
+			var chart = Chart.instances[chartId];
+			var index = Array.prototype.slice.call(parent.children).indexOf(target);
+
+			chart.legend.options.onClick.call(chart, event, chart.legend.legendItems[index]);
+			if (chart.isDatasetVisible(index)) {
+				target.classList.remove('hidden');
+			} else {
+				target.classList.add('hidden');
+			}
+		}
+		var ctx = document.getElementById('statisticsChart').getContext('2d');
+
+		var statisticsChart = new Chart(ctx, {
+			type: 'line',
+			data: {
+				labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+				datasets: [ {
+					label: "Kesejahteraan Penduduk",
+					borderColor: '#f3545d',
+					pointBackgroundColor: 'rgba(243, 84, 93, 0.6)',
+					pointRadius: 0,
+					backgroundColor: 'rgba(243, 84, 93, 0.4)',
+					legendColor: '#f3545d',
+					fill: true,
+					borderWidth: 2,
+					data: [154, 184, 175, 203, 210, 231, 240, 278, 252, 312, 320, 374]
+				}, {
+					label: "Infrastruktur",
+					borderColor: '#fdaf4b',
+					pointBackgroundColor: 'rgba(253, 175, 75, 0.6)',
+					pointRadius: 0,
+					backgroundColor: 'rgba(253, 175, 75, 0.4)',
+					legendColor: '#fdaf4b',
+					fill: true,
+					borderWidth: 2,
+					data: [256, 230, 245, 287, 240, 250, 230, 295, 331, 431, 456, 521]
+				}, {
+					label: "Fasilitas Umum",
+					borderColor: '#177dff',
+					pointBackgroundColor: 'rgba(23, 125, 255, 0.6)',
+					pointRadius: 0,
+					backgroundColor: 'rgba(23, 125, 255, 0.4)',
+					legendColor: '#177dff',
+					fill: true,
+					borderWidth: 2,
+					data: [542, 480, 430, 550, 530, 453, 380, 434, 568, 610, 700, 900]
+				}]
+			},
+			options : {
+				responsive: true, 
+				maintainAspectRatio: false,
+				legend: {
+					display: false
+				},
+				tooltips: {
+					bodySpacing: 4,
+					mode:"nearest",
+					intersect: 0,
+					position:"nearest",
+					xPadding:10,
+					yPadding:10,
+					caretPadding:10
+				},
+				layout:{
+					padding:{left:5,right:5,top:15,bottom:15}
+				},
+				scales: {
+					yAxes: [{
+						ticks: {
+							fontStyle: "500",
+							beginAtZero: false,
+							maxTicksLimit: 5,
+							padding: 10
+						},
+						gridLines: {
+							drawTicks: false,
+							display: false
+						}
+					}],
+					xAxes: [{
+						gridLines: {
+							zeroLineColor: "transparent"
+						},
+						ticks: {
+							padding: 10,
+							fontStyle: "500"
+						}
+					}]
+				}, 
+				legendCallback: function(chart) { 
+					var text = []; 
+					text.push('<ul class="' + chart.id + '-legend html-legend">'); 
+					for (var i = 0; i < chart.data.datasets.length; i++) { 
+						text.push('<li><span style="background-color:' + chart.data.datasets[i].legendColor + '"></span>'); 
+						if (chart.data.datasets[i].label) { 
+							text.push(chart.data.datasets[i].label); 
+						} 
+						text.push('</li>'); 
+					} 
+					text.push('</ul>'); 
+					return text.join(''); 
+				}  
+			}
+		});
+
+		var myLegendContainer = document.getElementById("myChartLegend");
+
+		// generate HTML legend
+		myLegendContainer.innerHTML = statisticsChart.generateLegend();
+
+		// bind onClick event to all LI-tags of the legend
+		var legendItems = myLegendContainer.getElementsByTagName('li');
+		for (var i = 0; i < legendItems.length; i += 1) {
+			legendItems[i].addEventListener("click", legendClickCallback, false);
+		}
+		

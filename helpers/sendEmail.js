@@ -8,7 +8,7 @@ const detailEmail = async (type = null, obj) => {
             const body = {
                 to: obj.email,
                 cc: [],
-                subject: 'Data Login Snow Drop Invitation',
+                subject: 'Credential Login System',
                 html: html,
                 attachments: []
             }
@@ -24,7 +24,7 @@ const detailEmail = async (type = null, obj) => {
 const mailing = async (body) => {
     // console.log({body});
     await sendMail({
-        replyTo: process.env.GMAIL_USER,
+        replyTo: process.env.EMAIL,
         ...body
     });
 }

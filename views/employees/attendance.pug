@@ -1,0 +1,107 @@
+extends ../layouts/base
+
+block content
+	-var no = 1;
+	-function prettyDate(dateString){
+		//if it's already a date object and not a string you don't need this line:
+		-var date = new Date(dateString);
+		-var d = date.getDate();
+		-var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+		-var m = monthNames[date.getMonth()];
+		-var y = date.getFullYear();
+		-return d+' '+m+' '+y;
+	-}
+
+	-function prettyTime(dateString){
+		//if it's already a date object and not a string you don't need this line:
+		-if(dateString == null){
+			-return "-"
+		-} else {
+			-var date = new Date(dateString);
+			-var d = date.getDate();
+			-var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+			-var m = monthNames[date.getMonth()];
+			-var y = date.getFullYear();
+			-var ss = date.getSeconds();
+			-var mm = date.getMinutes();
+			-var hh = date.getHours();
+			-return hh+':'+mm+':'+ss;
+		-}
+	-}
+	.content
+		.page-inner
+			.page-header
+				h4.page-title Employees Attendance
+				ul.breadcrumbs
+					li.nav-home
+						a(href="#")
+							i.flaticon-home
+					li.separator
+						i.flaticon-right-arrow
+					li.nav-item
+						a(href="#") Employees Attendance
+			.row
+				.col-md-12
+					//- hr
+					br
+					.row 
+						.col-lg-12
+							.card.card-round
+								.card-body
+									.card-title.fw-mediumbold Attendance
+									hr
+									.table-responsive
+										table#basic-datatables.display.table.table-striped.table-hover
+											thead
+												tr
+													th No
+													th Date
+													th Location
+													th Clock In
+													th Break 
+													th Clok Out 
+													th Total Hours
+													th Status 
+													th Picture
+											tbody
+												each data in datas
+													tr 
+														td #{no++}
+														td #{prettyDate(data.created_at)}
+														td #{data.location.address}
+														td #{prettyTime(data.clock_in)}
+														td #{prettyTime(data.break)}
+														td #{prettyTime(data.clock_out)}
+														td #{data.total_hours}
+														td(style="text-align: center;")
+															if data.int_time > 815
+																span.badge.badge-danger Late
+															else if data.int_time < 815
+																span.badge.badge-success On Time
+														td 
+															a(data-toggle='modal', href='', data-target='#image'+data._id) Picture
+			
+			each data in datas
+				.modal.fade(id='image'+data._id ,tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+					.modal-dialog
+						.modal-content
+							.modal-header
+								h3 
+									b Capture Picture Attendance
+								button.close(type="button", data-dismiss="modal")
+									span(aria-hidden="true")
+										i.fas.fa-window-close
+									span.sr-only close
+							.modal-body
+								.row 
+									.col-lg-12
+										.container
+											img(src=data.picture, alt="image", width='100%' style="display: block;")
+											//- br
+											//- br
+							.modal-footer
+								//- button.btn.btn-danger(type='button', data-dismiss='modal') Close
+								p Taken At: #{prettyDate(data.created_at)}, #{prettyTime(data.clock_in)}
+						// /.modal-content
+					// /.modal-dialog
+				// /.modal

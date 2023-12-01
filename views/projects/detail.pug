@@ -1,0 +1,187 @@
+extends ../layouts/base
+
+block content
+	-function prettyDate(dateString){
+		//if it's already a date object and not a string you don't need this line:
+		-var date = new Date(dateString);
+		-var d = date.getDate();
+		-var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+		-var m = monthNames[date.getMonth()];
+		-var y = date.getFullYear();
+		-var ss = date.getSeconds();
+		-var mm = date.getMinutes();
+		-var hh = date.getHours();
+		-var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+		-var dayName = days[date.getDay()];
+		-return dayName+', '+d+' '+m+' '+y;
+	-}
+	.content
+		.page-inner
+			.page-header
+				h4.page-title Detail Project
+				ul.breadcrumbs
+					li.nav-home
+						a(href="/web/v1/dashboard")
+							i.flaticon-home
+					li.separator
+						i.flaticon-right-arrow
+					li.nav-item
+						a(href="/web/v1/projects") Projects
+					li.separator
+						i.flaticon-right-arrow
+					li.nav-item
+						a(href="#") Detail Project
+			br
+			.row
+				.col-md-7
+					.card.card-profile
+						.card-header(style="background-image: url('/assets/images/agriculture-bg.png'); height: 300px;")
+							.profile-picture
+								.avatar.avatar-xxl
+									img.avatar-img.rounded-circle(src="/assets/images/project.jpg", alt="...")
+						.card-body
+							.user-profile.text-center
+								.name ##{data.code}
+								.name #{data.name}
+								.job 
+									a(href="/web/v1/projects/task?project_id="+data._id) Sprint Tasks
+								.desc 
+									button.btn.btn-info.btn-sm.btn-link(href="#")
+										span.badge.bg-danger Very Urgent
+								//- .social-media
+								//- 	a.btn.btn-info.btn-sm.btn-link(href="#")
+								//- 		span.badge.bg-danger Very Urgent
+								//- .view-profile
+								//- 	a.btn.btn-secondary.btn-block(href="#") View Full Profile
+						.card-footer
+							.row.user-stats.text-center
+								.col
+									.title 	Total Duration
+									.number #{data.duration} Hours
+								.col
+									.title Deadline
+									.number #{prettyDate(data.deadline)}
+								//- .col
+								//- 	.title Urgency
+								//- 	.number
+								//- 		a.btn.btn-info.btn-sm.btn-link(href="#")
+								//- 			span.badge.bg-danger Very Urgent
+						.card-footer
+							.row 
+								.col-md-12 
+									.container
+										if (session.role == 'developer' || session.role == 'pm')
+											h3 Assignee 
+											p
+												.user-box
+													.avatar
+														img.avatar-img.rounded-circle(src="/assets/images/avatar_default.png", alt="image profile")
+													.u-text
+														h4 #{data.assignee.name}
+														p.text-muted(style="text-align: left;") #{data.assignee.jobdesc}
+											.separator-solid
+
+										h3 Description
+										p #{data.description}
+										.separator-solid 
+
+										h3 Goals 
+										p #{data.goals}
+										.separator-solid
+
+										.row 
+											.col-md-12
+												h3 Progress 
+													span.pull-right 60%
+												p 
+													.progress
+														.progress-bar.progress-bar-info(role="progressbar", aria-valuenow="60", aria-valuemin="0", aria-valuemax="100", style="width: 60%;")
+															span.sr-only 60% Complete
+											//- .col-md-6
+											//- 	.container
+											//- 		h3 Tasks 
+											//- 		p 
+											//- 			a(href="/web/v1/projects/task?_id=87654321") Sprint Tasks Project IFRI
+										br
+
+				.col-md-5
+					.card
+						.card-header
+							.card-head-row
+								.card-title Support Tickets
+								.card-tools.text-right
+									if (session.role != 'staff')
+										button.btn.btn-dark.btn-round(data-original-title="Create Task", data-toggle='modal', href='', data-target='#createTicket')
+											span.btn-label
+												i.fa.fa-plus
+											| 
+											| Create
+								
+									//- ul#pills-tab.nav.nav-pills.nav-secondary.nav-pills-no-bd.nav-sm(role="tablist")
+									//- 	li.nav-item
+									//- 		a#pills-today.nav-link(data-toggle="pill", href="#pills-today", role="tab", aria-selected="true") Today
+									//- 	li.nav-item
+									//- 		a#pills-week.nav-link.active(data-toggle="pill", href="#pills-week", role="tab", aria-selected="false") Week
+									//- 	li.nav-item
+									//- 		a#pills-month.nav-link(data-toggle="pill", href="#pills-month", role="tab", aria-selected="false") Month
+						.card-body
+							each ticket in tickets
+								.d-flex
+									.avatar.avatar-sm
+										img.avatar-img.rounded-circle(src="/photos/"+ticket.created_by.photo, alt="image profile")
+									.flex-1.ml-3.pt-1
+										h6.text-uppercase.fw-bold.mb-1 #{ticket.created_by.name}
+											if (ticket.label == 'Bug')
+												span.text-warning.pl-3 bug
+											if (ticket.label == 'Feature')
+												span.text-primary.pl-3 feature
+											if (ticket.label == 'Note')
+												span.text-success.pl-3 note
+										if (ticket.isDone == true)
+											del 
+												span.text-muted #{ticket.description}
+													//- span.tooltiptext_custom already done!
+										else 
+											span.text-muted.tooltip_custom
+												a(href="tickets/done?ticket_id="+ticket._id) #{ticket.description}
+												span.tooltiptext_custom already done!
+
+									.float-right.pt-3
+										small.text-muted #{prettyDate(ticket.created_at)}
+										//- if (ticket.isDone == false)
+										//- 	button.btn.btn-icon.btn-dark.btn-round.btn-xs
+										//- 		i.fa.fa-check
+								.separator-dashed
+								br
+
+	
+	.modal.fade(id='createTicket',tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+		.modal-dialog(style="width: 600px;")
+			.modal-content
+				.modal-header
+					h2
+						b Create New Ticket
+					button.close(type="button", data-dismiss="modal")
+						span(aria-hidden="true")
+							i.fas.fa-window-close
+						span.sr-only close
+				.modal-body
+					form(action='/web/v1/projects/tickets/insert', enctype='multipart/form-data', method='post')
+						.form-group
+							label(for="exampleFormControlInput1") 
+								| Labels
+								span.text-danger *
+							select.form-control(name="label", id='', required="required")
+								option(value='') -- Labels --
+								option(value="Feature") Feature
+								option(value="Bug") Bug
+								option(value="Note") Note
+							input.form-control(type="hidden", name="project_id", value=data._id)
+							
+						.form-group
+							label(for="exampleFormControlInput1") 
+								| Description
+								span.text-danger *
+							textarea#description.form-control(rows='3', name='description', placeholder="Description")
+						.form-group
+							button.btn.btn-primary.waves-effect.waves-light.float-right(type="submit") Create

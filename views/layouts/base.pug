@@ -1,0 +1,16 @@
+doctype html
+html(lang="en")
+	head
+		include head.pug
+	body(data-background-color="bg3")
+		.wrapper
+			include header.pug
+
+			include sidebar.pug
+
+			.main-panel 
+				block content
+
+				include footer.pug
+
+		include js.pug

@@ -1,0 +1,81 @@
+extends ../layouts/base
+
+block content
+	.content
+		.page-inner
+			.page-header
+				h4.page-title Items
+				ul.breadcrumbs
+					li.nav-home
+						a(href="#")
+							i.flaticon-home
+					li.separator
+						i.flaticon-right-arrow
+					li.nav-item
+						a(href="#") Items
+			.row
+				.col-md-12
+					.card
+						.card-header
+							.row 
+								.col-lg-12
+									.d-flex.align-items-center
+										h4.card-title Items
+										a.button.btn.btn-dark.btn-round.ml-auto(href="/infrastructure/create")
+											i.fa.fa-plus
+											| 
+											| Create
+						.card-body
+							.table-responsive
+								table#basic-datatables.display.table.table-striped.table-hover
+									thead
+										tr
+											th No
+											th Items ID
+											th Name
+											th Type 
+											th Quantity 
+											th Action
+									tbody
+										//- each data in datas
+										//- 	tr
+										//- 		td #{no++}
+										//- 		td(style="color: #1F3BB3;") #{data.username}
+										//- 		td #{data.name}
+										//- 		td #{data.email}
+										//- 		td #{data.phone}
+										//- 		td(style="text-align: center;")
+										//- 			if data.role == 'perangkat_desa'
+										//- 				span.badge.badge-primary Perangkat Desa
+										//- 			else if data.role == 'dukuh'
+										//- 				span.badge.badge-success Enumator
+										//- 			else if data.role == 'ketua_padukuhan'
+										//- 				span.badge.badge-warning Dukuh
+										//- 			else if data.role == 'lurah'
+										//- 				span.badge.badge-secondary Lurah
+										//- 		td(style="text-align: center;")
+										//- 			if data.status == 'inactive'
+										//- 				span.badge.badge-danger Tidak Aktif
+										//- 			else if data.status == 'active'
+										//- 				span.badge.badge-success Aktif
+										
+										tr 
+											td 1
+											td
+												span.text-primary #12345678
+											td 
+												b Obeng Kembang
+											td Obeng
+											td 5
+											td.d-none.d-md-table-cell
+												button.btn.btn-lg.btn-outline-dark.dropdown-toggle(data-toggle="dropdown", href="#", aria-expanded="false")
+													| Action
+												ul.dropdown-menu
+													li 
+														a.dropdown-item(href="/web/v1/projects/documentation?_id=87654321") Detail
+													.dropdown-divider
+													li
+														a.dropdown-item(href='/web/v1/projects/detail?_id=87654321') Edit
+														
+													li 
+														a.dropdown-item(href="/web/v1/projects/task?_id=87654321") Delete

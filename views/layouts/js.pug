@@ -1,0 +1,200 @@
+script(src="/assets/js/core/jquery.3.2.1.min.js")
+script(src="/assets/js/core/popper.min.js")
+script(src="/assets/js/core/bootstrap.min.js")
+
+// jQuery UI
+script(src="/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js")
+script(src="/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js")
+
+// jQuery Scrollbar
+script(src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js")
+
+// Chart JS
+//- script(src="/assets/js/plugin/chart.js/chart.min.js")
+
+// jQuery Sparkline
+//- script(src="/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js")
+
+// Chart Circle
+script(src="/assets/js/plugin/chart-circle/circles.min.js")
+
+// Datatables
+script(src="/assets/js/plugin/datatables/datatables.min.js")
+
+// Bootstrap Notify
+script(src="/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js")
+
+// jQuery Vector Maps
+script(src="/assets/js/plugin/jqvmap/jquery.vmap.min.js")
+script(src="/assets/js/plugin/jqvmap/maps/jquery.vmap.world.js")
+
+// Sweet Alert
+script(src="/assets/js/plugin/sweetalert/sweetalert.min.js")
+
+// Atlantis JS
+script(src="/assets/js/atlantis.min.js")
+
+// Atlantis DEMO methods, don't include it in your project!
+script(src="/assets/js/setting-demo.js")
+//- script(src="/assets/js/demo.js")
+
+
+// Slider
+script(src="http://fullcalendar.io/js/fullcalendar-2.1.1/lib/moment.min.js")
+script(src="http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js")
+//- script(src="http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery.min.js")
+//- script(src="http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery-ui.custom.min.js")
+//- script(src="/assets/js/core/fullcalendar-init.js")
+
+
+script.
+	function logout(){
+		localStorage.clear();
+	}
+	
+//- script.
+//- 	$(function() {
+//- 		//- var showBanner = sessionStorage.setItem('status_banner', 'show');
+//- 		//- var status_banner = sessionStorage.getItem('status_banner')
+//- 		var hide_banner = localStorage.getItem('hide_banner')
+//- 		if (!hide_banner){
+//- 			$('#banner').modal('show');
+//- 		}
+
+//- 		var hide_notification = localStorage.getItem('hide_notification')
+//- 		console.log({hide_notification})
+//- 		if (!hide_notification) {
+//- 			$.notify({
+//- 				// options
+//- 				icon: 'fa fa-bell',
+//- 				title: 'Bootstrap notify',
+//- 				message: 'Turning standard Bootstrap alerts into "notify" like notifications',
+//- 				url: 'https://github.com/mouse0270/bootstrap-notify',
+//- 				target: '_blank'
+//- 			},{
+//- 				// settings
+//- 				element: 'body',
+//- 				position: null,
+//- 				type: "danger",
+//- 				allow_dismiss: true,
+//- 				newest_on_top: false,
+//- 				showProgressbar: false,
+//- 				placement: {
+//- 					from: "top",
+//- 					align: "right"
+//- 				},
+//- 				offset: 20,
+//- 				spacing: 10,
+//- 				z_index: 1031,
+//- 				delay: 0,
+//- 				timer: 1000,
+//- 				url_target: '_blank',
+//- 				mouse_over: null,
+//- 				animate: {
+//- 					enter: 'animated fadeInDown',
+//- 					exit: 'animated fadeOutUp'
+//- 				},
+//- 				onShow: null,
+//- 				onShown: null,
+//- 				onClose: hideNotify(),
+//- 				onClosed: null,
+//- 				icon_type: 'class',
+//- 				template: '<div data-notify="container" class="col-xs-11 col-sm-4 alert alert-{0}" role="alert">' +
+//- 					'<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+//- 					'<span data-notify="icon"></span> ' +
+//- 					'<span data-notify="title">{1}</span> ' +
+//- 					'<span data-notify="message">{2}</span>' +
+//- 					'<div class="progress" data-notify="progressbar">' +
+//- 						'<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+//- 					'</div>' +
+//- 					'<a href="{3}" target="{4}" data-notify="url"></a>' +
+//- 				'</div>' 
+//- 			});
+//- 		}
+//- 	});
+
+//- 	function hideNotify() {
+//- 		return function() {
+//- 			console.log("onClose");
+//- 			window.localStorage.setItem('hide_notification', 'true');
+//- 		};
+//- 	}
+
+	
+script.
+	$(function() {
+
+		var path = location.pathname
+		//- console.log({path})
+		$(".nav a").each(function(){
+			var href = $(this).attr('href');
+			//- console.log({href})
+			if(path.substring(0, href.length) === href){
+				if('positions' === path.split("/")[3] || 'employees' === path.split("/")[3] || 'attendances' === path.split("/")[3] || 'request-leave' === path.split("/")[3]) {
+					$(this).closest('li').addClass('active');
+					$('#sub-employees').closest('li').addClass('active');
+					$('#sub-employees' + ".collapse").collapse("show");
+				} else if('items' === path.split("/")[3] || 'inbounds' === path.split("/")[3] || 'outbounds' === path.split("/")[3]) {
+					$(this).closest('li').addClass('active');
+					$('#sub-inventorys').closest('li').addClass('active');
+					$('#sub-inventorys' + ".collapse").collapse("show");
+				} else if('inbounds' === path.split("/")[4] || 'outbounds' === path.split("/")[4]) {
+					$(this).closest('li').addClass('active');
+					$('#sub-complaint').closest('li').addClass('active');
+					$('#sub-complaint' + ".collapse").collapse("show");
+				} else {
+					$(this).closest('li').addClass('active');
+
+				}
+			} 
+		})
+	});
+
+script.
+	$(document).ready(function() {
+		$('#basic-datatables').DataTable({
+		});
+
+		$('#multi-filter-select').DataTable( {
+			"pageLength": 5,
+			initComplete: function () {
+				this.api().columns().every( function () {
+					var column = this;
+					var select = $('<select class="form-control"><option value=""></option></select>')
+					.appendTo( $(column.footer()).empty() )
+					.on( 'change', function () {
+						var val = $.fn.dataTable.util.escapeRegex(
+							$(this).val()
+							);
+
+						column
+						.search( val ? '^'+val+'$' : '', true, false )
+						.draw();
+					} );
+
+					column.data().unique().sort().each( function ( d, j ) {
+						select.append( '<option value="'+d+'">'+d+'</option>' )
+					} );
+				} );
+			}
+		});
+
+		// Add Row
+		$('#add-row').DataTable({
+			"pageLength": 5,
+		});
+
+		var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+
+		$('#addRowButton').click(function() {
+			$('#add-row').dataTable().fnAddData([
+				$("#addName").val(),
+				$("#addPosition").val(),
+				$("#addOffice").val(),
+				action
+				]);
+			$('#addRowModal').modal('hide');
+
+		});
+	});
+	

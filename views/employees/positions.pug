@@ -1,0 +1,77 @@
+extends ../layouts/base
+
+block content
+	.content
+		.page-inner
+			.page-header
+				h4.page-title Positions
+				ul.breadcrumbs
+					li.nav-home
+						a(href="#")
+							i.flaticon-home
+					li.separator
+						i.flaticon-right-arrow
+					li.nav-item
+						a(href="#") Positions
+			.row
+				.col-md-12
+					.card
+						.card-header
+							.row 
+								.col-lg-8 
+									.d-flex.align-items-center
+										h4.card-title Positions
+								//- .col-lg-4
+								//- 	.ml-md-auto.py-2.py-md-0(style="float: right;")
+								//- 		a.btn.btn-secondary.btn-round(href="/download/activity-users")
+								//- 			span.btn-label
+								//- 				i.fas.fa-cloud-download-alt
+								//- 			| 
+								//- 			| Download
+						.card-body
+							.table-responsive
+								table#basic-datatables.display.table.table-striped.table-hover
+									thead
+										tr
+											th No
+											th Id
+											th Name
+											th Actiom
+									tbody
+										//- each data in datas
+										//- 	tr
+										//- 		td #{no++}
+										//- 		td(style="color: #1F3BB3;") #{data.username}
+										//- 		td #{data.name}
+										//- 		td #{data.email}
+										//- 		td #{data.phone}
+										//- 		td(style="text-align: center;")
+										//- 			if data.role == 'perangkat_desa'
+										//- 				span.badge.badge-primary Perangkat Desa
+										//- 			else if data.role == 'dukuh'
+										//- 				span.badge.badge-success Enumator
+										//- 			else if data.role == 'ketua_padukuhan'
+										//- 				span.badge.badge-warning Dukuh
+										//- 			else if data.role == 'lurah'
+										//- 				span.badge.badge-secondary Lurah
+										//- 		td(style="text-align: center;")
+										//- 			if data.status == 'inactive'
+										//- 				span.badge.badge-danger Tidak Aktif
+										//- 			else if data.status == 'active'
+										//- 				span.badge.badge-success Aktif
+										
+										tr 
+											td 1
+											td
+												span.text-primary #123456
+											td 
+												b Graiden
+											td.d-none.d-md-table-cell
+												button.btn.btn-lg.btn-outline-primary.dropdown-toggle(data-toggle="dropdown", href="#", aria-expanded="false")
+													| Action
+												ul.dropdown-menu
+													li
+														a.dropdown-item(href='/web/v1/projects/detail?_id=87654321') Edit
+														
+													li 
+														a.dropdown-item(href="/web/v1/projects/task?_id=87654321") Delete

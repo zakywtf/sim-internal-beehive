@@ -4,9 +4,13 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const helmet = require('helmet');
+var session = require('express-session');
 const cors = require('cors');
 const chalk = require('chalk');
 const cron = require("node-cron");
+const useragent = require('express-useragent')
+var bodyParser = require('body-parser');
+
 require("dotenv").config();
 
 const routes = require('./routes');
@@ -41,6 +45,15 @@ mongoose
 
 mongoose.set('debug', process.env.NODE_ENV == 'development' ? true : false);
 
+// SESSION
+app.use(session({ secret: 'sim_internal_beehive', resave: true, saveUninitialized: true, cookie: { maxAge: process.env.SESSION_DURATION * 60 * 60 * 1000 } }));
+
+app.use(function(req,res,next){
+    res.locals.session = req.session;
+    res.locals.host = req.protocol+'://'+req.get('host');
+    next();
+});
+
 // Development Log
 if (process.env.NODE_ENV != 'development') {
     app.use(logger('combined'));
@@ -52,10 +65,14 @@ app.set('view engine', 'pug');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(useragent.express());
 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(express.bodyParser());
 // Enabling and allow CORS for all requests
 app.use(cors());
 

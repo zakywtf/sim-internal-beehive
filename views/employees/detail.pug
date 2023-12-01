@@ -1,0 +1,173 @@
+extends ../layouts/base
+
+block content
+	-function prettyDate(dateString){
+		//if it's already a date object and not a string you don't need this line:
+		-var date = new Date(dateString);
+		-var d = date.getDate();
+		-var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+		-var m = monthNames[date.getMonth()];
+		-var y = date.getFullYear();
+		-return d+' '+m+' '+y;
+	-}
+	.content
+		.page-inner
+			.page-header
+				h4.page-title Employee Detail
+				ul.breadcrumbs
+					li.nav-home
+						a(href="#")
+							i.flaticon-home
+					li.separator
+						i.flaticon-right-arrow
+					li.nav-item
+						a(href="#") Employee Detail
+			br
+			.row
+				.col-lg-3
+					.row 
+						.col-lg-12
+							.card.card-profile
+								.card-header(style="background-image: url('/assets/images/forestry-bg.png'); height: 200px;")
+									.profile-picture
+										.avatar.avatar-xxl
+											img.avatar-img.rounded-circle(src="/photos/"+data.photo, alt="...")
+								.card-body
+									.user-profile.text-center
+										.name #{data.name}
+										.job
+											span.text-primary #{data.employee_id}
+										.job #{data.position} - #{data.division}
+										.job #{data.jobdesc}
+										.desc At work for: 1 years 3 months 8 days
+								.card-footer
+									.row.user-stats.text-center
+										.col
+											.title 	Attendances
+											.number 60
+										.col
+											.title Leaves
+											.number 5
+				.col-lg-4 
+					.row 
+						.col-lg-12
+							.card 
+								.card-header 
+									.card-head-row
+										.card-title Personal Details
+								.card-body
+									h5 
+										b National Id 
+									p #{data.national_id}
+									h5 
+										b Name
+									p #{data.name}
+									h5 
+										b Date of Birth
+									p #{prettyDate(data.date_of_birth)}
+									h5 
+										b Gender
+									p #{data.gender}
+									h5 
+										b Email
+									p #{data.email}
+									h5 
+										b Phone
+									p #{data.phone}
+									h5 
+										b Address
+									p #{data.address}
+					//- .row 
+					//- 	.col-lg-12
+					//- 		.card 
+					//- 			.card-header 
+					//- 				.card-head-row
+					//- 					.card-title Company Details
+					//- 			.card-body
+					//- 				h5 
+					//- 					b Employee Id 
+					//- 				p 20200101001
+					//- 				h5 
+					//- 					b Position
+					//- 				p Team Leader
+					//- 				h5 
+					//- 					b Division
+					//- 				p Software
+				.col-lg-5
+					.row 
+						.col-lg-12
+							.card.full-height
+								.card-body
+									.card-title Overall statistics
+									.card-category Monthly information about #{data.name}
+									.d-flex.flex-wrap.justify-content-around.pb-2.pt-4
+										.px-2.pb-2.pb-md-0.text-center
+											#circles-2
+											h6.fw-bold.mt-3.mb-0 On Time
+										.px-2.pb-2.pb-md-0.text-center
+												#circles-3
+												h6.fw-bold.mt-3.mb-0 Late
+										.px-2.pb-2.pb-md-0.text-center
+											#circles-1
+											h6.fw-bold.mt-3.mb-0 KPI
+					.row 
+						.col-lg-12
+							.card 
+								.card-header 
+									.card-head-row
+										.card-title Upcoming Holiday
+								.card-body
+									.upcoming-holiday
+										strong 22 November 2023
+										p Indicates a dangerous or potentially negative action.
+
+	script(src="/assets/js/plugin/chart.js/chart.min.js")
+	//- script(src="/assets/js/custom-chart.js")
+	script(src="/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js")
+	script(src="/assets/js/plugin/chart-circle/circles.min.js")
+	script(src='/assets/js/jquery.min.js')
+	script.
+		Circles.create({
+			id:'circles-1',
+			radius:45,
+			value:60,
+			maxValue:100,
+			width:7,
+			text: 5,
+			colors:['#f1f1f1', '#FF9E27'],
+			duration:400,
+			wrpClass:'circles-wrp',
+			textClass:'circles-text',
+			styleWrapper:true,
+			styleText:true
+		})
+
+		Circles.create({
+			id:'circles-2',
+			radius:45,
+			value:70,
+			maxValue:100,
+			width:7,
+			text: 36,
+			colors:['#f1f1f1', '#2BB930'],
+			duration:400,
+			wrpClass:'circles-wrp',
+			textClass:'circles-text',
+			styleWrapper:true,
+			styleText:true
+		})
+
+		Circles.create({
+			id:'circles-3',
+			radius:45,
+			value:40,
+			maxValue:100,
+			width:7,
+			text: 12,
+			colors:['#f1f1f1', '#F25961'],
+			duration:400,
+			wrpClass:'circles-wrp',
+			textClass:'circles-text',
+			styleWrapper:true,
+			styleText:true
+		})

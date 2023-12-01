@@ -1,0 +1,122 @@
+doctype html
+html(lang="en")
+	head
+		meta(charset="UTF-8")
+		meta(name="viewport", content="width=device-width, initial-scale=1.0")
+		title Sign in - Beehive Employee Dashboard
+		link(rel="stylesheet", href="/assets/css/bootstrap-login.css")
+		link(rel="shortcut icon", href="/assets/images/favicon-2.png", type="image/x-icon")
+		link(rel="stylesheet", href="/assets/css/app-login.css")
+		link(rel="stylesheet", href="/assets/css/custom-login.css")
+		link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")
+
+		style. 
+			.fa-eye{
+				float: right;
+				margin-top: -25px;
+				position: relative;
+				z-index: 1;
+				cursor:pointer;
+				margin-right: 2%;
+			}
+
+			#info-error-login {
+				font-size: 17px;
+				text-align: left;
+				display: none;
+				color:red;
+			}
+
+			.tex-primary {
+				color: #377fdd;
+			}
+	body
+		#auth
+			.container
+				.row
+					.col-md-5.col-sm-12.mx-auto
+						.card.pt-4
+							.card-body
+								.text-center.mb-5
+									img.mb-4(src="/assets/images/new-logo-color.png", height="48")
+									//- h3 Sign In
+									p Please sign in to continue to Beehive.
+								p#info-error-login
+									#text-error.alert-danger
+								form(action="", method="post")
+									.form-group.position-relative.has-icon-left
+										label(for="employee_id") Employee ID
+										.position-relative
+											input#employee_id.form-control(type="text", name="employee_id")
+											.form-control-icon
+												i.fa-solid.fa.fa-user
+
+									.form-group.position-relative.has-icon-left
+										.clearfix
+											label(for="password") Password
+											a.float-right(href="#")
+												small Forgot password?
+										.position-relative
+											input#password.form-control(type="text", name="password")
+											i#eye.fa-solid.fa.fa-eye
+											.form-control-icon
+												i.fa-solid.fa.fa-lock
+											
+									.form-check.clearfix.my-4
+										.checkbox.float-left
+											input#lsRememberMe.form-check-input(type="checkbox", value="lsRememberMe")
+											label(for="checkbox1") Remember me
+									.clearfix
+										button.btn.btn-submit.float-right(type="button", onclick="ajaxLogin()") Submit
+								br
+								hr
+								.row
+									footer
+										.footer.clearfix.mb-0.text-muted.text-center
+											| Copyright © 2023
+											|
+											a(href="https://beehivedrones.com/") Beehivedrones
+		script(src="assets/js/feather-icons/feather.min.js")
+		script(src="assets/js/app.js")
+		script(src="/assets/js/core/jquery.3.2.1.min.js")
+		script(src="/assets/js/main.js")
+		script(src="/assets/js/login.js")
+		script.
+			function closeModalLogin() {
+				var modal = document.getElementById("error");
+				modal.style.display = "none";
+			}
+
+			const data = window.location.hash
+			console.log({data})
+			const eye = document.querySelector("#eye");
+			const password = document.querySelector('#password');
+
+			eye.addEventListener('click', function (e) {
+				// toggle the type attribute
+				const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+				password.setAttribute('type', type);
+				// toggle the eye slash icon
+				this.classList.toggle('fa-eye-slash');
+			});
+
+			const rmCheck = document.getElementById("rememberMe"),
+			emailInput = document.getElementById("employee_id");
+
+			if (localStorage.checkbox && localStorage.checkbox !== "") {
+				rmCheck.setAttribute("checked", "checked");
+				emailInput.value = localStorage.username;
+			} else {
+				rmCheck.removeAttribute("checked");
+				emailInput.value = "";
+			}
+
+			function lsRememberMe() {
+				if (rmCheck.checked && emailInput.value !== "") {
+					localStorage.username = emailInput.value;
+					localStorage.checkbox = rmCheck.value;
+				} else {
+					localStorage.username = "";
+					localStorage.checkbox = "";
+				}
+			}

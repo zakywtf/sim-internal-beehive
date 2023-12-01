@@ -1,0 +1,106 @@
+extends ../layouts/base
+
+block content
+	.content
+		.page-inner
+			.page-header
+				h4.page-title Documentations
+				ul.breadcrumbs
+					li.nav-home
+						a(href="/web/v1/dashboard")
+							i.flaticon-home
+					li.separator
+						i.flaticon-right-arrow
+					li.nav-item
+						a(href="/web/v1/projects") Projects
+					li.separator
+						i.flaticon-right-arrow
+					li.nav-item
+						a(href="#") Documentations
+			.row
+				.col-md-12
+					.card
+						.card-header
+							.row 
+								.col-lg-8 
+									.d-flex.align-items-center
+										h4.card-title Documentations
+						.card-body
+							.table-responsive
+								table#basic-datatables.display.table.table-striped.table-hover
+									thead
+										tr
+											th Project ID
+											th Description
+											th Label
+											th Images
+									tbody
+										-var no = 1;
+										-function prettyDate(dateString){
+											//if it's already a date object and not a string you don't need this line:
+											-var date = new Date(dateString);
+											-var d = date.getDate();
+											-var monthNames = [ "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember" ];
+											-var m = monthNames[date.getMonth()];
+											-var y = date.getFullYear();
+											-var ss = date.getSeconds();
+											-var mm = date.getMinutes();
+											-var hh = date.getHours();
+											-return d+' '+m+' '+y+', '+hh+':'+mm+':'+ss;
+										-}
+										//- each data in datas
+										//- 	tr
+										//- 		td #{no++}
+										//- 		td(style="color: #1F3BB3;") #{data.username}
+										//- 		td #{data.name}
+										//- 		td #{data.email}
+										//- 		td #{data.phone}
+										//- 		td(style="text-align: center;")
+										//- 			if data.role == 'perangkat_desa'
+										//- 				span.badge.badge-primary Perangkat Desa
+										//- 			else if data.role == 'dukuh'
+										//- 				span.badge.badge-success Enumator
+										//- 			else if data.role == 'ketua_padukuhan'
+										//- 				span.badge.badge-warning Dukuh
+										//- 			else if data.role == 'lurah'
+										//- 				span.badge.badge-secondary Lurah
+										//- 		td(style="text-align: center;")
+										//- 			if data.status == 'inactive'
+										//- 				span.badge.badge-danger Tidak Aktif
+										//- 			else if data.status == 'active'
+										//- 				span.badge.badge-success Aktif
+										
+										tr 
+											td
+												span.text-primary #123456
+											td 
+												b Feat: Create Chart Dashboard
+											td 
+												span.badge.bg-primary Feature
+											td 
+												a(data-toggle='modal', href='', data-target='#image') Open Image
+
+			.modal.fade(id='image' ,tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+				.modal-dialog
+					.modal-content
+						.modal-header
+							h3 
+								b Feat: Create Chart Dashboard
+							button.close(type="button", data-dismiss="modal")
+								span(aria-hidden="true")
+									i.fas.fa-window-close
+								span.sr-only close
+						.modal-body
+							.row 
+								.col-lg-12
+									.container
+										img(src="/assets/images/agriculture-bg.png", alt="image", width='100%' style="display: block;")
+										//- br
+										//- br
+						.modal-footer
+							//- button.btn.btn-danger(type='button', data-dismiss='modal') Close
+							p Uploaded At: 20 November 2023, 14:00
+					// /.modal-content
+				// /.modal-dialog
+			// /.modal
+												

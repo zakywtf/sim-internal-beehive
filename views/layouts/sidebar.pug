@@ -1,0 +1,21 @@
+.sidebar.sidebar-style-2
+	.sidebar-wrapper.scrollbar.scrollbar-inner
+		.sidebar-content
+			.user
+				.avatar-sm.float-left.mr-2
+					img.avatar-img.rounded-circle(src="/photos/"+session.photo, alt="user profile")
+				.info
+					a(data-toggle="collapse", href="#collapseExample", aria-expanded="true")
+						span
+							| #{session.name}
+							span.user-level #{session.jobdesc}
+			ul.nav.nav-primary
+				li.nav-item
+					a(href="/web/v1/dashboard")
+						i.fas.fa-home
+						p Dashboard
+				- var role = session.role
+				case role!==undefined
+					when role == 'developer': include ./menubar/dev-menu.pug
+					when role == 'hrd': include ./menubar/hrd-menu.pug
+					when role == 'staff': include ./menubar/staff-menu.pug
