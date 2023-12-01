@@ -1,6 +1,6 @@
-# beehive-company-profile
+# sim-internal-beehive
 
-Beehive company profile.
+System Information Management Internal Beehive.
 
 # Requiments:
 
@@ -11,7 +11,7 @@ Beehive company profile.
 Dev Enviroments:
 
 ```cmd
-$ cd beehive-company-profile
+$ cd sim-internal-beehive
 $ npm install
 $ npm run dev
 ```
@@ -19,7 +19,7 @@ $ npm run dev
 Production Enviroments:
 
 ```cmd
-$ cd beehive-company-profile
+$ cd sim-internal-beehive
 $ npm install
 $ npm start
 ```
@@ -60,4 +60,4 @@ localhost:3005
 Coming soon
 ```
 
-# beehive-company-profile
+# sim-internal-beehive
