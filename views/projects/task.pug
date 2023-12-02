@@ -1,6 +1,23 @@
 extends ../layouts/base
 
 block content
+	-function prettyDate(dateString){
+		//if it's already a date object and not a string you don't need this line:
+		-var date = new Date(dateString);
+		-var d = date.getDate();
+		-var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+		-var monthInt = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" ];
+		-var m = monthNames[date.getMonth()];
+		-var m1 = monthInt[date.getMonth()];
+		-var y = date.getFullYear();
+		-var ss = date.getSeconds();
+		-var mm = date.getMinutes();
+		-var hh = date.getHours();
+		-var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+		-var dayName = days[date.getDay()];
+		-return d+'/'+m1+'/'+y+' - '+hh+':'+mm;
+	-}
+	
 	.content
 		.page-inner
 			.page-header
@@ -38,88 +55,104 @@ block content
 							.row 
 								.col-lg-4
 									h4(style="text-align: center;") To Do
+
 									.card(style="background-color: #e9ecef;")
 										.col-sm-12.col-lg-12
 											br
 											br
-											.card.p-3
-												.row
-													.col-lg-12
-														.text-right(style="font-size: 20px;")
-															i.far.fa-play-circle(style="cursor: pointer;")
-															|
-															|
-															i.far.fa-pause-circle(style="cursor: pointer;", title='', data-original-title="Pause Task", data-toggle='modal', href='', data-target='#pause')
-												br
-												br
-												.d-flex.align-items-center
-													span.stamp.stamp-md.bg-primary.mr-3
-														i.fa.fa-check
-													div
-														h5.mb-1
-															b #1234-1
-														small.text-muted Feat: Crete Formula Estimasi Panen Per Pixel Kering dan Basah
-												hr
-												.row 
-													.col-md-8 
-														div(style="font-size: 12px;")
-															small.text-muted 11/20/2022 - 14:00
-															br
-															small.text-muted Created By : Nova Zaky Fathoni
-													.col-md-4
-														.text-right
-															//- button.dropdown-toggle(data-toggle="dropdown", href="#", aria-expanded="false")
-															i.fa.fa-bars(data-toggle="dropdown", href="#", aria-expanded="false", style="cursor: pointer;")
-															ul.dropdown-menu
-																li
-																	a.dropdown-item(data-original-title="Show Task", data-toggle='modal', href='', data-target='#show') show
-																li
-																	a.dropdown-item(href="#") move to
-																		|
-																		|
-																		i.fas.fa-angle-double-right
-																	ul.dropdown-menu.dropdown-submenu
-																		li
-																			a.dropdown-item(href="#") todo
-																		li
-																			a.dropdown-item(href="#") in progress
-																		li
-																			a.dropdown-item(href="#") done
-																.dropdown-divider
-																li
-																	a.dropdown-item(data-original-title="Comments Task", data-toggle='modal', href='', data-target='#comments') comments
-																.dropdown-divider
-																li
-																	a.dropdown-item(href='/web/v1/projects/detail?_id=87654321') delete
+											each todo in todos
+												.card.p-3
+													br
+													br
+													.row 
+														.col-lg-10
+															.d-flex.align-items-center
+																if (todo.label == 'feature')
+																	span.stamp.stamp-md.bg-primary.mr-3
+																		i.fa.fa-check
+																else
+																	span.stamp.stamp-md.bg-danger.mr-3
+																		i.fa.fa-circle
+																div
+																	h5.mb-1
+																		b ##{data.code}-#{todo.inc_code}
+																	small.text-muted #{todo.name}
+													hr
+													.row 
+														.col-md-8 
+															div(style="font-size: 12px;")
+																small.text-muted #{prettyDate(todo.created_at)} | #{todo.created_by.name}
+														.col-md-4
+															.text-right
+																i.fa.fa-bars(data-toggle="dropdown", href="#", aria-expanded="false", style="cursor: pointer;")
+																ul.dropdown-menu
+																	li
+																		a.dropdown-item(data-original-title="Show Task", data-toggle='modal', href='', data-target='#showtodo'+todo._id) show
+																	li
+																		a.dropdown-item(href="#") move to
+																			|
+																			|
+																			i.fas.fa-angle-double-right
+																		ul.dropdown-menu.dropdown-submenu
+																			li
+																				a.dropdown-item(href="sprint-tasks/update?status=progress&task_id="+todo._id) in progress
+																	.dropdown-divider
+																	li
+																		a.dropdown-item(href='/web/v1/projects/detail?_id=87654321') delete
+
 								.col-lg-4
 									h4(style="text-align: center;") In Progress
 									.card(style="background-color: #e9ecef;")
 										.col-sm-12.col-lg-12
 											br
 											br
-											.card.p-3
-												.row
-													.col-lg-12
-														.text-right(style="font-size: 20px;")
-															i.far.fa-play-circle(style="cursor: pointer;")
-															|
-															|
-															i.far.fa-pause-circle(style="cursor: pointer;")
-												.d-flex.align-items-center
-													span.stamp.stamp-md.bg-danger.mr-3
-														i.fa.fa-circle
-													div
-														h5.mb-1
-															b #1234-1
-														small.text-muted Fix: Bug Formula Estimasi Panen Per Pixel to get Coordinates
-												hr
-												.row 
-													.col-md-8 
-														div(style="font-size: 12px;")
-															span 11/20/2022 - 14:00
-													.col-md-4
-														.text-right
-															i.fa.fa-bars
+											each progres in progress
+												.card.p-3
+													br
+													br
+													.row 
+														.col-lg-10
+															.d-flex.align-items-center
+																if (progres.label == 'feature')
+																	span.stamp.stamp-md.bg-primary.mr-3
+																		i.fa.fa-check
+																else
+																	span.stamp.stamp-md.bg-danger.mr-3
+																		i.fa.fa-circle
+																div
+																	h5.mb-1
+																		b ##{data.code}-#{progres.inc_code}
+																	small.text-muted #{progres.name}
+														.col-lg-2
+															.text-right(style="font-size: 20px;")
+																i.far.fa-play-circle(style="cursor: pointer;")
+																|
+																|
+																i.far.fa-pause-circle(style="cursor: pointer;", title='', data-original-title="Pause Task", data-toggle='modal', href='', data-target='#pause')
+
+													hr
+													.row 
+														.col-md-9
+															div(style="font-size: 12px;")
+																small.text-muted #{prettyDate(progres.updated_at)} | #{progres.created_by.name}
+														.col-md-3
+															.text-right
+																//- button.dropdown-toggle(data-toggle="dropdown", href="#", aria-expanded="false")
+																i.fa.fa-bars(data-toggle="dropdown", href="#", aria-expanded="false", style="cursor: pointer;")
+																ul.dropdown-menu
+																	li
+																		a.dropdown-item(data-original-title="Show Task", data-toggle='modal', href='', data-target='#showprogres'+progres._id) show
+																	li
+																		a.dropdown-item(href="#") move to
+																			|
+																			|
+																			i.fas.fa-angle-double-right
+																		ul.dropdown-menu.dropdown-submenu
+																			li
+																				a.dropdown-item(href="sprint-tasks/update?status=done&task_id="+progres._id) done
+																	.dropdown-divider
+																	li
+																		a.dropdown-item(data-original-title="Comments Task", data-toggle='modal', href='', data-target='#comments') comments
 
 								.col-lg-4
 									h4(style="text-align: center;") Done
@@ -127,29 +160,37 @@ block content
 										.col-sm-12.col-lg-12
 											br
 											br
-											.card.p-3
-												.row
-													.col-lg-12
-														.text-right(style="font-size: 20px;")
-															i.far.fa-play-circle(style="cursor: pointer;")
-															|
-															|
-															i.far.fa-pause-circle(style="cursor: pointer;")
-												.d-flex.align-items-center
-													span.stamp.stamp-md.bg-primary.mr-3
-														i.fa.fa-check
-													div
-														h5.mb-1
-															b #1234-1
-														small.text-muted Feat: Import Geojson To Database
-												hr
-												.row 
-													.col-md-8 
-														div(style="font-size: 12px;")
-															span 11/20/2022 - 14:00
-													.col-md-4
-														.text-right
-															i.fa.fa-bars
+											each done in dones
+												.card.p-3
+													br
+													br
+													.row 
+														.col-lg-10
+															.d-flex.align-items-center
+																if (done.label == 'feature')
+																	span.stamp.stamp-md.bg-primary.mr-3
+																		i.fa.fa-check
+																else
+																	span.stamp.stamp-md.bg-danger.mr-3
+																		i.fa.fa-circle
+																div
+																	h5.mb-1
+																		b ##{data.code}-#{done.inc_code}
+																	small.text-muted #{done.name}
+													hr
+													.row 
+														.col-md-8 
+															div(style="font-size: 12px;")
+																small.text-muted #{prettyDate(done.updated_at)} | #{done.created_by.name}
+														.col-md-4
+															.text-right
+																i.fa.fa-bars(data-toggle="dropdown", href="#", aria-expanded="false", style="cursor: pointer;")
+																ul.dropdown-menu
+																	li
+																		a.dropdown-item(data-original-title="Show Task", data-toggle='modal', href='', data-target='#showdone'+done._id) show
+																	.dropdown-divider
+																	li
+																		a.dropdown-item(data-original-title="Comments Task", data-toggle='modal', href='', data-target='#comments') Documentation
 
 
 	.modal.fade(id='create',tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
@@ -163,20 +204,22 @@ block content
 							i.fas.fa-window-close
 						span.sr-only close
 				.modal-body
-					form(action='/topografi/create', enctype='multipart/form-data', method='post')
+					form(action='/web/v1/projects/sprint-tasks/insert', enctype='multipart/form-data', method='post')
 						.form-group
 							label(for="exampleFormControlInput1") 
 								| Labels
 								span.text-danger *
-							select.form-control(name="labels", id='', required="required")
+							select.form-control(name="label", id='', required="required")
 								option(value='') -- Labels --
-								option(value="Feature") Feature
-								option(value="Fix Bug") Fix Bug
+								option(value="feature") Feature
+								option(value="fix-bug") Fix Bug
 						.form-group
 							label(for="exampleFormControlInput1") 
 								| Name
 								//- span.text-danger *
 							input.form-control(type="text", name="name", required="required", placeholder="Name")
+							input.form-control(type="hidden", name="project_id", value=data._id)
+
 						.form-group
 							label(for="exampleFormControlInput1") 
 								| Description
@@ -186,59 +229,143 @@ block content
 							button.btn.btn-primary.waves-effect.waves-light.float-right(type="submit") Create
 
 							
+	each todo in todos
+		.modal.fade(id='showtodo'+todo._id, tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+			.modal-dialog(style="width: 700px;")
+				.modal-content
+					.modal-header
+						if (todo.label == 'feature')
+							span.stamp.stamp-md.bg-primary.mr-3
+								i.fa.fa-check
+						else
+							span.stamp.stamp-md.bg-danger.mr-3
+								i.fa.fa-circle
+						div
+							h2.mb-1
+								b ##{data.code}-#{todo.inc_code}
+						button.close(type="button", data-dismiss="modal")
+							span(aria-hidden="true")
+								i.fas.fa-window-close
+							span.sr-only close
+					.modal-body
+						.row 
+							.col-lg-12 
+								.container
+									h4.fw-bold.mb-1 Name
+									p #{todo.name}
 
-	.modal.fade(id='show',tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
-		.modal-dialog(style="width: 700px;")
-			.modal-content
-				.modal-header
-					span.stamp.stamp-sm.bg-primary.mr-3
-						i.fa.fa-check
-					div
-						h2.mb-1
-							b #1234-1
-					button.close(type="button", data-dismiss="modal")
-						span(aria-hidden="true")
-							i.fas.fa-window-close
-						span.sr-only close
-				.modal-body
-					.row 
-						.col-lg-12 
-							.container
-								h4.fw-bold.mb-1 Name
-								p Feat: Crete Formula Estimasi Panen Per Pixel Kering dan Basah
+									h4.fw-bold.mb-1 Descriptions
+									p #{todo.description}
+									br
 
-								h4.fw-bold.mb-1 Descriptions
-								p Some quick example text to build on the card title and make up the bulk of the card's content.
-								
-								h4.fw-bold.mb-1 Documentation
-								p
-									img(src="/assets/images/agriculture-bg.png", alt="Img Profile" width="90%")
-								br
-								
-								h4.fw-bold.mb-1 Comments
-								br
-								.row 
-									.col-lg-8
-										.d-flex
-											.avatar.avatar-online.avatar-sm
-												img.avatar-img.rounded-circle(src="/assets/images/avatar_default.png", alt="image profile")
-											.flex-1.ml-3.pt-1
-												h5.fw-bold.mb-1 Joko Subianto 
-													span.text-primary.pl-3(style="font-size: 12px;") 11/20/2022 - 14:00
-												span.text-muted Pug is a terse and simple templating language with a strong focus on performance and powerful features.
-										br
-										.d-flex
-											.avatar.avatar-online.avatar-sm
-												img.avatar-img.rounded-circle(src="/assets/images/avatar_default.png", alt="image profile")
-											.flex-1.ml-3.pt-1
-												h5.fw-bold.mb-1 Joko Subianto 
-													span.text-primary.pl-3(style="font-size: 12px;") 11/20/2022 - 14:00
-												span.text-muted I am facing some trouble with my viewport. When i start my
-								br
-								br
-				.modal-footer
-					//- button.btn.btn-danger(type='button', data-dismiss='modal') Close
-					p Created November 26, 2020 at 2:25 PM
+	each progres in progress
+		.modal.fade(id='showprogres'+progres._id, tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+			.modal-dialog(style="width: 700px;")
+				.modal-content
+					.modal-header
+						if (progres.label == 'feature')
+							span.stamp.stamp-md.bg-primary.mr-3
+								i.fa.fa-check
+						else
+							span.stamp.stamp-md.bg-danger.mr-3
+								i.fa.fa-circle
+						div
+							h2.mb-1
+								b ##{data.code}-#{progres.inc_code}
+						button.close(type="button", data-dismiss="modal")
+							span(aria-hidden="true")
+								i.fas.fa-window-close
+							span.sr-only close
+					.modal-body
+						.row 
+							.col-lg-12 
+								.container
+									h4.fw-bold.mb-1 Name
+									p #{progres.name}
+
+									h4.fw-bold.mb-1 Descriptions
+									p #{progres.description}
+
+									.dropdown-divider
+									
+									h4.fw-bold.mb-1 Comments
+									br
+									.row 
+										.col-lg-8
+											.d-flex
+												.avatar.avatar-online.avatar-sm
+													img.avatar-img.rounded-circle(src="/assets/images/avatar_default.png", alt="image profile")
+												.flex-1.ml-3.pt-1
+													h5.fw-bold.mb-1 Joko Subianto 
+														span.text-primary.pl-3(style="font-size: 12px;") 11/20/2022 - 14:00
+													span.text-muted Pug is a terse and simple templating language with a strong focus on performance and powerful features.
+											br
+											.d-flex
+												.avatar.avatar-online.avatar-sm
+													img.avatar-img.rounded-circle(src="/assets/images/avatar_default.png", alt="image profile")
+												.flex-1.ml-3.pt-1
+													h5.fw-bold.mb-1 Joko Subianto 
+														span.text-primary.pl-3(style="font-size: 12px;") 11/20/2022 - 14:00
+													span.text-muted I am facing some trouble with my viewport. When i start my
+									br
+									br
+
+	each done in dones
+		.modal.fade(id='showdone'+done._id, tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+			.modal-dialog(style="width: 700px;")
+				.modal-content
+					.modal-header
+						if (done.label == 'feature')
+							span.stamp.stamp-md.bg-primary.mr-3
+								i.fa.fa-check
+						else
+							span.stamp.stamp-md.bg-danger.mr-3
+								i.fa.fa-circle
+						div
+							h2.mb-1
+								b ##{data.code}-#{done.inc_code}
+						button.close(type="button", data-dismiss="modal")
+							span(aria-hidden="true")
+								i.fas.fa-window-close
+							span.sr-only close
+					.modal-body
+						.row 
+							.col-lg-12 
+								.container
+									h4.fw-bold.mb-1 Name
+									p #{done.name}
+
+									h4.fw-bold.mb-1 Descriptions
+									p #{done.description}
+									
+									h4.fw-bold.mb-1 Documentation
+									p
+										img(src="/assets/images/agriculture-bg.png", alt="Img Profile" width="90%")
+									br
+
+									.dropdown-divider
+									
+									h4.fw-bold.mb-1 Comments
+									br
+									.row 
+										.col-lg-8
+											.d-flex
+												.avatar.avatar-online.avatar-sm
+													img.avatar-img.rounded-circle(src="/assets/images/avatar_default.png", alt="image profile")
+												.flex-1.ml-3.pt-1
+													h5.fw-bold.mb-1 Joko Subianto 
+														span.text-primary.pl-3(style="font-size: 12px;") 11/20/2022 - 14:00
+													span.text-muted Pug is a terse and simple templating language with a strong focus on performance and powerful features.
+											br
+											.d-flex
+												.avatar.avatar-online.avatar-sm
+													img.avatar-img.rounded-circle(src="/assets/images/avatar_default.png", alt="image profile")
+												.flex-1.ml-3.pt-1
+													h5.fw-bold.mb-1 Joko Subianto 
+														span.text-primary.pl-3(style="font-size: 12px;") 11/20/2022 - 14:00
+													span.text-muted I am facing some trouble with my viewport. When i start my
+									br
+									br
 
 
 	.modal.fade(id='pause',tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
