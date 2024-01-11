@@ -88,25 +88,38 @@ block content
 													i.fas.fa-sign-out-alt
 					.row 
 						.col-lg-12
-							.card
-								.card-header
-									.card-title
-										span
-											i.far.fa-calendar-alt
-												| 
-												| New Schedules
-								.card-body
-									.card.p-3.new-schedule
-										.d-flex.align-items-center
-											span.stamp.stamp-md.bg-info.mr-3
-												i.fa.fa-calendar-check
-											div
-												h5.mb-1
-													b
-														a(href="#") Meeting IFRI 
-													small (22-10-2023, 09:00)
-												h5.mb-1 
-													| Meeting membahas rumus
+							.card.flex-fill
+								.card-header 
+									.d-flex.align-items-center
+										span.stamp.stamp-md.bg-secondary.mr-3
+											i.fa.fa-calendar-check
+										div
+											h5.mb-1
+												b
+													| Presence
+											
+											small.text-muted Attendance (15) || Leaves (2) || Remaining Days Off (10)
+								.card-body.d-flex
+									#calendar
+									//- .card
+									//- 	.card-header
+									//- 		.card-title
+									//- 			span
+									//- 				i.far.fa-calendar-alt
+									//- 					| 
+									//- 					| New Schedules
+									//- 	.card-body
+									//- 		.card.p-3.new-schedule
+									//- 			.d-flex.align-items-center
+									//- 				span.stamp.stamp-md.bg-info.mr-3
+									//- 					i.fa.fa-calendar-check
+									//- 				div
+									//- 					h5.mb-1
+									//- 						b
+									//- 							a(href="#") Meeting IFRI 
+									//- 						small (22-10-2023, 09:00)
+									//- 					h5.mb-1 
+									//- 						| Meeting membahas rumus
 				.col-md-8
 					.row 
 						.col-lg-4
@@ -142,6 +155,7 @@ block content
 											.numbers
 												p.card-category Feedback
 												h4.card-title 10
+					
 						//- .col-md-3
 						//- 	.card.card-stats.card-dark.card-round.bg-dark-gradient
 						//- 		.card-body.skew-shadow
@@ -245,6 +259,64 @@ block content
 			//- 		// /.modal-content
 			//- 	// /.modal-dialog
 			//- // /.modal
+
+			//-  MODAL SCHEDULE
+			#createEventModal.modal.fade
+				.modal-dialog
+					.modal-content
+						.modal-header
+							h3 
+								b Create Schedule
+							button.close(type="button", data-dismiss="modal")
+								span(aria-hidden="true")
+									i.fas.fa-window-close
+								span.sr-only close
+						#modalBody.modal-body
+							.form-group
+								label
+									| Name
+									span.text-danger *
+								input#user_id.form-control(type="hidden", value = session.user_id, required)
+								input#name.form-control(type="text", value = session.name, disabled)
+							.form-group
+								label
+									| Type Of Permit
+									span.text-danger *
+								select#chemical.select2.form-control(name="chemical")
+									option(value="pupuk") Terlambat masuk (antara pkl 8.16-8.30 WIB)
+									option(value="insectisdia") Ijin untuk keperluan pribadi di jam kerja (berangkat siang/pulang awal/ijin keluar di tengah jam kerja)
+									option(value="fungisida") Ijin tidak masuk kerja (1 hari) atau ijin sakit tanpa surat dokter
+									option(value="akarisida") Ijin keluar kantor untuk keperluan perusahaan (misal membeli barang)
+									option(value="bakterisida") Ijin sakit dengan Surat Keterangan Dokter / SKD - WAJIB melampirkan SKD di kolom bawah
+									option(value="moluskisida") WFH
+							.form-group
+								label
+									| Description
+									span.text-danger *
+								textarea#description.form-control(rows='5', name='description', required)
+								br
+								//- input(type="button", value="Delete", onclick="DeleteMarkers()")
+						.modal-footer
+							button.btn(data-dismiss="modal", aria-hidden="true") Cancel
+							button#submitButton.btn.btn-dark(type="submit") Save
+
+			#calendarModal.modal.fade
+				.modal-dialog
+					.modal-content
+						.modal-header
+							h3 
+								b Schedule Detail
+							button.close(type="button", data-dismiss="modal")
+								span(aria-hidden="true")
+									i.fas.fa-window-close
+								span.sr-only close
+						#modalBody.modal-body
+							h5 
+								b Name 
+							p#name_title
+							h5 
+								b Type Of Permit
+							p#type_permit
 
 	script(src="/assets/js/plugin/chart.js/chart.min.js")
 	//- script(src="/assets/js/custom-chart.js")
@@ -578,4 +650,110 @@ block content
 		for (var i = 0; i < legendItems.length; i += 1) {
 			legendItems[i].addEventListener("click", legendClickCallback, false);
 		}
+
+	script.
+		var date = new Date();
+		var d = date.getDate();
+		var m = date.getMonth();
+		var y = date.getFullYear();
+		var form = '';
+		var today = new Date($.now());
+
+		var defaultEvents =  [
+			{
+				title: 'Nova Zaky Fathoni',
+				start: new Date($.now() + 158000000),
+				end: new Date($.now() + 238000000),
+				className: 'bg-dark',
+				description: {
+					type_permit: 'Ijin tidak masuk kerja (1 hari) atau ijin sakit tanpa surat dokter'
+				}
+			}, 
+			{
+				title: 'See John Deo',
+				start: today,
+				end: today,
+				className: 'bg-danger',
+				description: {
+					type_permit: 'Ijin tidak masuk kerja (1 hari) atau ijin sakit tanpa surat dokter'
+				}
+			}, 
+			{
+				title: 'See John dsadsa',
+				start:new Date(),
+				end: today,
+				className: 'bg-danger',
+				description: {
+					type_permit: 'Ijin tidak masuk kerja (1 hari) atau ijin sakit tanpa surat dokter'
+				}
+			},
+			{
+				title: 'Nova Zaky Fathoni',
+				start: new Date($.now() + 338000000),
+				className: 'bg-primary',
+				description: {
+					type_permit: 'Ijin tidak masuk kerja (1 hari) atau ijin sakit tanpa surat dokter'
+				}
+			}
+		];
+		$(document).ready(function() {
+			$('#calendar').fullCalendar({
+				events: defaultEvents,
+				editable: true,
+				eventLimit: true,
+				header: {
+					left: 'title',
+					center: '',
+					right: 'today prev,next'
+				},
+				navLinks: true, // can click day/week names to navigate views
+				displayEventTime: false,
+				eventRender: function (event, element, view) {
+					if (event.allDay === 'true') {
+						event.allDay = true;
+					} else {
+						event.allDay = false;
+					}
+				},
+				selectable: true,
+				select: function(start, end, jsEvent, view) {
+					// start contains the date you have selected
+					// end contains the end date. 
+					// Caution: the end date is exclusive (new since v2).
+					//- var allDay = !start.hasTime() && !end.hasTime();
+					//- alert(["Event Start date: " + moment(start).format(),
+					//- 		"Event End date: " + moment(end).format(),
+					//- 		"AllDay: " + allDay].join("\n"));
+					sessionStorage.setItem('start_date', start.toISOString());
+					sessionStorage.setItem('end_date', end.toISOString());
+					$('#createEventModal').modal('show');
+				},
+				eventDrop: function (event, delta, revertFunc) {
+
+				},
+
+				//When u resize an event in the calendar do the following:
+				eventResize: function (event, delta, revertFunc) {
+					//do something when event is resized
+				},
+
+				eventRender: function(event, element) {
+					$(element).tooltip({title: event.title});             
+				},
+
+				//Activating modal for 'when an event is clicked'
+				eventClick: function (event) {
+					console.log({event})
+					var date = new Date(event.start._d);
+					var d = date.getDate();
+					var m = date.getMonth();
+					var y = date.getFullYear();
+					const start_date = d+'-'+m+'-'+y
+					$('#name_title').html(`${event.title}`);
+					$('#type_permit').html(`${event.description.type_permit}`);
+
+					$('#calendarModal').modal();
+				},
+			});
+		});
 		

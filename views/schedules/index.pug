@@ -13,36 +13,39 @@ block content
 						i.flaticon-right-arrow
 					li.nav-item
 						a(href="#") Schedules
-			.row
-				.col-lg-5
-					.row
-						.col-md-4
-							.card.card-dark.card-round.bg-dark-gradient
-								.card-body.skew-shadow
-									h1 70
-									h5.op-8 Attendance
-						.col-md-4
-							.card.card-dark.card-round.bg-dark-gradient
-								.card-body.bubble-shadow
-									h1 5
-									h5.op-8 Leaves
-						.col-md-4
-							.card.card-dark.card-round.bg-dark-gradient
-								.card-body.skew-shadow
-									h1 7
-									h5.op-8 Remaining Days Off
-					.row 
-						.col-lg-12
-							.card.flex-fill
-								.card-body.d-flex
-									#calendar
-				.col-lg-7
+			//- .row
+			//- 	.col-lg-5
+			//- 		.row
+			//- 			.col-md-4
+			//- 				.card.card-dark.card-round.bg-dark-gradient
+			//- 					.card-body.skew-shadow
+			//- 						h1 70
+			//- 						h5.op-8 Attendance
+			//- 			.col-md-4
+			//- 				.card.card-dark.card-round.bg-dark-gradient
+			//- 					.card-body.bubble-shadow
+			//- 						h1 5
+			//- 						h5.op-8 Leaves
+			//- 			.col-md-4
+			//- 				.card.card-dark.card-round.bg-dark-gradient
+			//- 					.card-body.skew-shadow
+			//- 						h1 7
+			//- 						h5.op-8 Remaining Days Off
+			//- 		.row 
+			//- 			.col-lg-12
+			//- 				.card.flex-fill
+			//- 					.card-body.d-flex
+			//- 						#calendar
+			//- 	.col-lg-7
+					
+			.row 
+				.col-lg-12
 					.card.flex-fill
 						.card-header 
 							h4.card-title Daily Schedule
-
 						.card-body
 							#dpDay
+
 
 			//-  MODAL SCHEDULE
 			#createEventModal.modal.fade
@@ -105,14 +108,26 @@ block content
 	script(src="/assets/js/core/daypilot-all.min.js")
 	script.
 		const day = new DayPilot.Calendar("dpDay");
-		day.viewType = "Day";
+		day.viewType = "Resources";
+		day.columns.list = [
+			{ name: "Meeting Room A", id: "A"},
+			{ name: "Meeting Room B", id: "B" },
+			{ name: "Meeting Room C", id: "C" },
+			{ name: "Meeting Room D", id: "D" },
+			{ name: "Meeting Room E", id: "E" },
+			{ name: "Meeting Room F", id: "F" },
+			{ name: "Meeting Room F", id: "F" },
+			{ name: "Meeting Room F", id: "F" },
+			{ name: "Meeting Room F", id: "F" },
+			{ name: "Meeting Room F", id: "F" },
+		];
 		day.events.list = [
 			{
-				"start": "2023-10-05T10:30:00",
-				"end": "2023-10-05T12:00:00",
+				"start": "2023-12-02T10:30:00",
+				"end": "2023-12-02T12:00:00",
 				id: "1",
 				resource: "A",
-				text: "Event",
+				text: "Event<br/>dsahdsajh",
 				backColor: "#c0d4ec"
 			}
 		];

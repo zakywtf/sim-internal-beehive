@@ -1,0 +1,105 @@
+extends ../layouts/base
+
+block content
+	.content
+		.page-inner
+			.page-header
+				h4.page-title Employee Activity
+				ul.breadcrumbs
+					li.nav-home
+						a(href="#")
+							i.flaticon-home
+					li.separator
+						i.flaticon-right-arrow
+					li.nav-item
+						a(href="#") Employee Activity
+					
+			.row 
+				.col-lg-12
+					.card.flex-fill
+						.card-header 
+							h4.card-title Daily Activity
+							span#start
+							a(href="#", onclick="picker.show(); return false;") Change
+						.card-body
+							#dp
+
+							
+	script(src="/assets/js/core/daypilot-all.min.js")
+	script.
+		const picker = new DayPilot.DatePicker({
+			target: 'start',
+			pattern: 'yyyy-MM-dd',
+			onTimeRangeSelected: args => {
+				dp.startDate = args.start;
+				dp.update();
+			}
+		});
+
+		const dp = new DayPilot.Calendar("dp", {
+			startDate: DayPilot.Date.today(),
+			onTimeRangeSelected: async args => {
+				const modal = await DayPilot.Modal.prompt("New event name:", "Event");
+				if (modal.canceled) return;
+				dp.events.add({
+					start: args.start,
+					end: args.end,
+					id: "1",
+					resource: args.resource,
+					text: "Event"
+				});
+				dp.clearSelection();
+				dp.message("Created");
+			}
+		});
+		dp.init();
+
+		const app = {
+			init() {
+				this.addEventHandlers();
+				this.loadEventData();
+			},
+			addEventHandlers() {
+				document.getElementById("change").addEventListener("click", (ev) => {
+					ev.preventDefault();
+					picker.show();
+				});
+			},
+			loadEventData() {
+				const events = [
+					{
+						"start": "2023-12-03T10:30:00",
+						"end": "2023-12-03T12:00:00",
+						id: 1,
+						text: "Event"
+					}
+				];
+				dp.update({events});
+			}
+		};
+		app.init();
+		//- const day = new DayPilot.Calendar("dp");
+		//- day.viewType = "Resources";
+		//- day.columns.list = [
+		//- 	{ name: "Meeting Room A", id: "A"},
+		//- 	{ name: "Meeting Room B", id: "B" },
+		//- 	{ name: "Meeting Room C", id: "C" },
+		//- 	{ name: "Meeting Room D", id: "D" },
+		//- 	{ name: "Meeting Room E", id: "E" },
+		//- 	{ name: "Meeting Room F", id: "F" },
+		//- 	{ name: "Meeting Room F", id: "F" },
+		//- 	{ name: "Meeting Room F", id: "F" },
+		//- 	{ name: "Meeting Room F", id: "F" },
+		//- 	{ name: "Meeting Room F", id: "F" },
+		//- ];
+		//- day.events.list = [
+		//- 	{
+		//- 		"start": "2023-11-02T10:30:00",
+		//- 		"end": "2023-11-02T12:00:00",
+		//- 		id: "1",
+		//- 		resource: "B",
+		//- 		text: "Event<br/>dsahdsajh",
+		//- 		backColor: "#c0d4ec"
+		//- 	}
+		//- ];
+		//- day.init();
