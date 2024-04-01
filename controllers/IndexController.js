@@ -5,6 +5,7 @@ const TestJson = require("../schemas/test_json");
 
 const { generate } = require("../helpers/randGen");
 const { detailEmail } = require("../helpers/sendEmail")
+const { inboundOutbound } = require("../helpers/masterFunction")
 
 const IndexController = {
 
@@ -22,12 +23,19 @@ const IndexController = {
         res.render('dashboard/index');
     },
 
-    
 
     // ==========================================================================================================================================
 
     ping: (req, res) => {
-        return apiResponse.successResponse(res, 'Pong');
+        const items = ["a", "b", "c", "d", "e", "a", "b", "c", "f", "g", "h", "h", "h", "e", "a"];
+
+        const arrInboundOutbound = inboundOutbound(items)
+        return apiResponse.successResponseWithData(res, 'Pong', arrInboundOutbound);
+    },
+
+    scanner: (req, res) => {
+        res.render('scanner/index');
+
     },
 
     contactUs: async (req, res, next) => {

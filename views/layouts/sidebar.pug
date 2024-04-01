@@ -8,7 +8,7 @@
 					a(data-toggle="collapse", href="#collapseExample", aria-expanded="true")
 						span
 							| #{session.name}
-							span.user-level #{session.jobdesc}
+							span.user-level NIK. #{session.employee_id}
 			ul.nav.nav-primary
 				li.nav-item
 					a(href="/web/v1/dashboard")
@@ -19,3 +19,4 @@
 					when role == 'developer': include ./menubar/dev-menu.pug
 					when role == 'hrd': include ./menubar/hrd-menu.pug
 					when role == 'staff': include ./menubar/staff-menu.pug
+					when role == 'procurement': include ./menubar/procurement-menu.pug

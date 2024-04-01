@@ -17,7 +17,7 @@ router.get('/', IndexController.index);
 
 // Routes Test
 router.get('/ping', IndexController.ping);
-router.get('/ping', IndexController.ping);
+router.get('/scanner', IndexController.scanner);
 router.post('/test', IndexController.testJson);
 router.get('/rand-string', IndexController.randString);
 // router.get('/payment', IndexController.testPayment);

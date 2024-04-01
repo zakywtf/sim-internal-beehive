@@ -1,0 +1,33 @@
+//- li.nav-item
+//- 	a(href="/web/v1/projects")
+//- 		i.fas.fa-tasks
+//- 		p Projects
+//- li.nav-item
+//- 	a(href="/web/v1/schedules")
+//- 		i.fas.fa-calendar-alt
+//- 		p Schedule
+li.nav-item
+	a(data-toggle="collapse", href="#sub-complaint")
+		i.fas.fa-briefcase
+		p Form Complaint
+		span.caret
+	#sub-complaint.collapse
+		ul.nav.nav-collapse
+			li
+				a(href="/web/v1/complaints/inbounds")
+					span.sub-item Inbounds
+			li
+				a(href="/web/v1/complaints/outbounds")
+					span.sub-item Outbounds
+//- li.nav-item
+//- 	a(href="/web/v1/announcements")
+//- 		i.fas.fa-info-circle
+//- 		p Announcements
+//- li.nav-item
+//- 	a(href="/web/v1/sharing-folder")
+//- 		i.fas.fa-folder-open
+//- 		p Sharing Folder
+//- li.nav-item
+//- 	a(href="/web/v1/chats")
+//- 		i.fas.fa-comment-alt
+//- 		p Chat
