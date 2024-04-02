@@ -18,6 +18,7 @@ router.use('/attendances', require('./attendances'));
 router.use('/request-leave', require('./requestLeave'));
 router.use('/announcements', require('./announcements'));
 router.use('/activities', require('./activities'));
+router.use('/request-items', require('./requestItems'));
 
 
 module.exports = router;

@@ -82,7 +82,7 @@ html(lang="en")
 			| QR Code Scanner / Reader
 	body
 		.container
-			h1 Scan QR Codes
+			//- h1 Scan QR Codes
 			.section
 				#my-qr-reader
 		script(src="https://unpkg.com/html5-qrcode").
@@ -104,7 +104,8 @@ html(lang="en")
 			
 				// If found you qr code
 				function onScanSuccess(decodeText, decodeResult) {
-					alert("You Qr is : " + decodeText, decodeResult);
+					//- alert("You Qr is : " + decodeText, decodeResult);
+					console.log(`Scan result: ${decodedText}`, decodedResult);
 				}
 			
 				let htmlscanner = new Html5QrcodeScanner(

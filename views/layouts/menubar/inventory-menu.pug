@@ -7,18 +7,25 @@
 //- 		i.fas.fa-calendar-alt
 //- 		p Schedule
 li.nav-item
-	a(data-toggle="collapse", href="#sub-complaint")
+	a(data-toggle="collapse", href="#sub-inventorys")
 		i.fas.fa-briefcase
-		p Form Complaint
+		p Inventorys
 		span.caret
-	#sub-complaint.collapse
+	#sub-inventorys.collapse
 		ul.nav.nav-collapse
 			li
-				a(href="/web/v1/complaints/inbounds")
+				a(href="/web/v1/items")
+					span.sub-item Items
+			li
+				a(href="/web/v1/inbounds")
 					span.sub-item Inbounds
 			li
-				a(href="/web/v1/complaints/outbounds")
+				a(href="/web/v1/outbounds")
 					span.sub-item Outbounds
+li.nav-item
+	a(href="/web/v1/request-items")
+		i.fas.fa-shopping-basket
+		p Request Items
 //- li.nav-item
 //- 	a(href="/web/v1/announcements")
 //- 		i.fas.fa-info-circle

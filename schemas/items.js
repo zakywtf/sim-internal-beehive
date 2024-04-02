@@ -9,8 +9,8 @@ let sch = new Schema({
     name: {
         type: String,
     },
-    department: {
-        type: String
+    quantity: {
+        type: Number
     }
 });
 

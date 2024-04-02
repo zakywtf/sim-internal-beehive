@@ -4,7 +4,7 @@ block content
 	.content
 		.page-inner
 			.page-header
-				h4.page-title Items
+				h4.page-title Request Items
 				ul.breadcrumbs
 					li.nav-home
 						a(href="#")
@@ -12,7 +12,7 @@ block content
 					li.separator
 						i.flaticon-right-arrow
 					li.nav-item
-						a(href="#") Items
+						a(href="#") Request Items
 			.row
 				.col-md-12
 					.card
@@ -20,7 +20,7 @@ block content
 							.row 
 								.col-lg-12
 									.d-flex.align-items-center
-										h4.card-title Items
+										h4.card-title Request Items
 										a.button.btn.btn-dark.btn-round.ml-auto(href="/infrastructure/create")
 											i.fa.fa-plus
 											| 
@@ -31,10 +31,10 @@ block content
 									thead
 										tr
 											th No
-											th Items ID
+											th Request ID
 											th Name
-											//- th Type 
-											th Quantity 
+											th Status 
+											th Date Request 
 											th Action
 									tbody
 										//- each data in datas
@@ -64,9 +64,13 @@ block content
 											td
 												span.text-primary #12345678
 											td 
-												b Obeng Kembang
-											//- td Obeng
-											td 5
+												b Nova Zaky Fathoni
+											td
+												span.badge.badge-warning on check
+											td
+												small Wednesday, 21 September 2023
+												br
+												small 14:50 
 											td.d-none.d-md-table-cell
 												button.btn.btn-lg.btn-outline-dark.dropdown-toggle(data-toggle="dropdown", href="#", aria-expanded="false")
 													| Action

@@ -16,15 +16,15 @@ block content
 			.row
 				.col-md-12
 					.card
-						.card-header
-							.row 
-								.col-lg-12
-									.d-flex.align-items-center
-										h4.card-title Inbounds
-										a.button.btn.btn-dark.btn-round.ml-auto(href="/infrastructure/create")
-											i.fa.fa-plus
-											| 
-											| Create
+						//- .card-header
+						//- 	.row 
+						//- 		.col-lg-12
+									//- .d-flex.align-items-center
+									//- 	h4.card-title Inbounds
+									//- 	a.button.btn.btn-dark.btn-round.ml-auto(href="/infrastructure/create")
+									//- 		i.fa.fa-plus
+									//- 		| 
+									//- 		| Create
 						.card-body
 							.table-responsive
 								table#basic-datatables.display.table.table-striped.table-hover
@@ -34,9 +34,9 @@ block content
 											th Items ID
 											th Name
 											th Quantity 
-											th Taken By 
-											th Taken At 
-											th Action
+											th Returned By 
+											th Returned At 
+											//- th Action
 									tbody
 										//- each data in datas
 										//- 	tr
@@ -78,15 +78,15 @@ block content
 												small Wednesday, 20 September 2023
 												br
 												small 14:50  
-											td.d-none.d-md-table-cell
-												button.btn.btn-lg.btn-outline-dark.dropdown-toggle(data-toggle="dropdown", href="#", aria-expanded="false")
-													| Action
-												ul.dropdown-menu
-													li 
-														a.dropdown-item(href="/web/v1/projects/documentation?_id=87654321") Detail
-													.dropdown-divider
-													li
-														a.dropdown-item(href='/web/v1/projects/detail?_id=87654321') Edit
+											//- td.d-none.d-md-table-cell
+											//- 	button.btn.btn-lg.btn-outline-dark.dropdown-toggle(data-toggle="dropdown", href="#", aria-expanded="false")
+											//- 		| Action
+											//- 	ul.dropdown-menu
+											//- 		li 
+											//- 			a.dropdown-item(href="/web/v1/projects/documentation?_id=87654321") Detail
+											//- 		.dropdown-divider
+											//- 		li
+											//- 			a.dropdown-item(href='/web/v1/projects/detail?_id=87654321') Edit
 														
-													li 
-														a.dropdown-item(href="/web/v1/projects/task?_id=87654321") Delete
+											//- 		li 
+											//- 			a.dropdown-item(href="/web/v1/projects/task?_id=87654321") Delete

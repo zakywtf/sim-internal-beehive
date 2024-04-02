@@ -112,7 +112,7 @@ let sch = new Schema({
     },
     role: {
         type:String, 
-        enum:['developer', 'freelance', 'staff', 'hrd', 'pm', 'finance', 'director', 'marketing', 'sales', 'ceo', 'coo', 'cto'], 
+        enum:['developer', 'freelance', 'staff', 'hrd', 'pm', 'finance', 'director', 'marketing', 'sales', 'ceo', 'coo', 'cto', 'inventory'], 
         default:'staff'
     },
     isDeleted: {

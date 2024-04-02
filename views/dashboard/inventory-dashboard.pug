@@ -1,0 +1,76 @@
+extends ../layouts/base
+
+block content
+	.content
+		.panel-header
+			.page-inner.py-5
+				.d-flex.align-items-left.align-items-md-center.flex-column.flex-md-row
+					div
+						h2.text-black.pb-2.fw-bold Dashboard
+						h5.text-black.op-7.mb-2 Welcome, 
+							b #{session.name}!
+							|
+							| This is your summary
+					//- .ml-md-auto.py-2.py-md-0
+					//- 	a.btn.btn-secondary.btn-round(href="/test/download")
+					//- 		span.btn-label
+					//- 			i.fas.fa-cloud-download-alt
+					//- 		| 
+					//- 		| Download
+		.page-inner.mt--5
+			.row
+				.col-md-12
+					.row 
+						.col-lg-4
+							.card.card-stats.card-dark.card-round.bg-dark-gradient
+								.card-body.skew-shadow
+									.row
+										.col-5
+											.icon-big.text-center
+												i.flaticon-calendar
+										.col-7.col-stats
+											.numbers
+												p.card-category Total Project
+												h4.card-title 5
+						.col-lg-4
+							.card.card-stats.card-dark.card-round.bg-dark-gradient
+								.card-body.skew-shadow
+									.row
+										.col-5
+											.icon-big.text-center
+												i.flaticon-technology-1
+										.col-7.col-stats
+											.numbers
+												p.card-category Deadline
+												h4.card-title 3
+						.col-md-4
+							.card.card-stats.card-dark.card-round.bg-dark-gradient
+								.card-body.skew-shadow
+									.row
+										.col-5
+											.icon-big.text-center
+												i.flaticon-exclamation
+										.col-7.col-stats
+											.numbers
+												p.card-category Feedback
+												h4.card-title 10
+					
+						//- .col-md-3
+						//- 	.card.card-stats.card-dark.card-round.bg-dark-gradient
+						//- 		.card-body.skew-shadow
+						//- 			.row
+						//- 				.col-5
+						//- 					.icon-big.text-center
+						//- 						i.flaticon-agenda-1
+						//- 				.col-7.col-stats
+						//- 					.numbers
+						//- 						p.card-category New Schedule
+						//- 						h4.card-title 1
+					
+
+	script(src="/assets/js/plugin/chart.js/chart.min.js")
+	//- script(src="/assets/js/custom-chart.js")
+	script(src="/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js")
+	script(src="/assets/js/plugin/chart-circle/circles.min.js")
+	script(src='/assets/js/jquery.min.js')
+	
