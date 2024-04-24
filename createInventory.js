@@ -18,7 +18,7 @@ const createAdmin = async () => {
         name: 'Inventory Beehive',
         role: 'inventory',
         phone: '08324378979',
-        employee_id: '20200101002'
+        employee_id: '20200101010'
     });
 
     await admin.save()

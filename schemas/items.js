@@ -6,11 +6,26 @@ let sch = new Schema({
     code: {
         type: String,
     },
+    serial_number: {
+        type: String
+    },
     name: {
         type: String,
     },
-    quantity: {
+    amount: {
         type: Number
+    }, 
+    unit: {
+        type: String
+    },
+    condition: {
+        type: String
+    },
+    temp_location: {
+        type: String
+    },
+    grouping: {
+        type: String
     }
 });
 

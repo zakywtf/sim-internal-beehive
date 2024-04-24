@@ -1,0 +1,93 @@
+extends ../layouts/base
+
+block content
+	-function prettyDate(dateString){
+		//if it's already a date object and not a string you don't need this line:
+		-var date = new Date(dateString);
+		-var d = date.getDate();
+		-var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+		-var m = monthNames[date.getMonth()];
+		-var y = date.getFullYear();
+		-return d+' '+m+' '+y;
+	-}
+	.content
+		.page-inner
+			.page-header
+				h4.page-title Request Items
+				ul.breadcrumbs
+					li.nav-home
+						a(href="#")
+							i.flaticon-home
+					li.separator
+						i.flaticon-right-arrow
+					li.nav-item
+						a(href="/web/v1/request-items") Request Items
+					li.separator
+						i.flaticon-right-arrow
+					li.nav-item
+						a(href="#") Detail Request Items
+			.row
+				.col-md-12
+					.card
+						.card-header
+							.d-flex.align-items-center
+								h4.card-title Detail Request Items
+						.card-body
+							.row(style="margin-left: 2%;")
+								.col-lg-8
+									.invoice-number.mb-30
+										h1.text-primary 
+											b ##{data.request_id}
+										.row 
+											.col-md-2 
+												h4.name Request By
+											.col-md-4
+												h4.name 
+													b #{data.request_by.name}
+										.row 
+											.col-md-2 
+												h4.name Request Date
+											.col-md-4
+												h4.name #{prettyDate(data.date_request)}
+										.row 
+											.col-md-2 
+												h4.name Status
+											.col-md-4
+												if data.status == 'inbound'
+													span.badge.badge-success Inbound
+												else if data.status == 'outbound'
+													span.badge.badge-primary Outbound
+												else if data.status == 'requested'
+													span.badge.badge-danger Requested
+										//- p.invo-addr-1
+										//- 	| #{data.request_by.role}
+										//- 	br
+										//- 	| #{data.request_by.division}
+										//- 	br
+							br
+							.row(style="margin-left: 2%;")
+								.col-lg-10
+									.table-responsive
+										table.table.table-bordered
+											thead
+												tr
+													th #
+													th Code Item
+													th Name
+													th Serial Number
+													th Amount
+													th Status
+											tbody
+												-var no = 1;
+												each item in items
+													tr
+														th(scope="row") #{no++}
+														td #{item.item_id.code}
+														td #{item.item_id.name}
+														td #{item.item_id.serial_number}
+														td #{item.amount}
+														td
+															if item.status == 'pinjam'
+																span.badge.badge-primary Pinjam
+															else if item.status == 'habis'
+																span.badge.badge-warning Habis

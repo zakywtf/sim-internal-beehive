@@ -23,6 +23,7 @@ router.get('/rand-string', IndexController.randString);
 // router.get('/payment', IndexController.testPayment);
 router.get('/contact_us', IndexController.contactUs);
 router.get('/email-test', IndexController.testSendEmail);
+router.get('/save-item', IndexController.saveItems);
 
 
 // Routes Prefixes / API

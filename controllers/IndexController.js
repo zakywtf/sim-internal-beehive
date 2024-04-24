@@ -2,10 +2,14 @@ const apiResponse = require("../helpers/apiResponse");
 const mailer = require("../helpers/nodeMailer");
 const Users = require("../schemas/users");
 const TestJson = require("../schemas/test_json");
+const Items = require("../schemas/items");
 
 const { generate } = require("../helpers/randGen");
 const { detailEmail } = require("../helpers/sendEmail")
 const { inboundOutbound } = require("../helpers/masterFunction")
+const ITEMS = require("../helpers/constItemsJson");
+
+var QRCode = require('qrcode')
 
 const IndexController = {
 
@@ -26,15 +30,35 @@ const IndexController = {
 
     // ==========================================================================================================================================
 
-    ping: (req, res) => {
+    ping: async (req, res) => {
         const items = ["a", "b", "c", "d", "e", "a", "b", "c", "f", "g", "h", "h", "h", "e", "a"];
 
-        const arrInboundOutbound = inboundOutbound(items)
-        return apiResponse.successResponseWithData(res, 'Pong', arrInboundOutbound);
+        // const arrInboundOutbound = inboundOutbound(items)
+        // return apiResponse.successResponseWithData(res, 'Pong', arrInboundOutbound);
+
+
+        // QRCode.toDataURL('I am a pony!', function (err, url) {
+        //     console.log(url)
+        //     return apiResponse.successResponseWithData(res, 'Pong', url);
+
+        // });
+        const url = await QRCode.toDataURL('I am a pony!')
+        return apiResponse.successResponseWithData(res, 'Pong', url);
+
     },
 
     scanner: (req, res) => {
         res.render('scanner/index');
+
+    },
+
+    saveItems: async (req, res) => {
+        for (let i = 0; i < ITEMS.length; i++) {
+            const item = ITEMS[i];
+            await Items.create(item)
+        }
+
+        return apiResponse.successResponse(res, 'Selesai');
 
     },
 

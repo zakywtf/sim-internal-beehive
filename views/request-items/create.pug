@@ -1,0 +1,43 @@
+extends ../layouts/base
+
+block content
+	.content
+		.page-inner
+			.page-header
+				h4.page-title Positions
+				ul.breadcrumbs
+					li.nav-home
+						a(href="#")
+							i.flaticon-home
+					li.separator
+						i.flaticon-right-arrow
+					li.nav-item
+						a(href="/web/v1/positions") Positions
+					li.separator
+						i.flaticon-right-arrow
+					li.nav-item
+						a(href="#") Create Position
+			.row
+				.col-md-6
+					.card
+						.card-header
+							.d-flex.align-items-center
+								h4.card-title Create Positions
+						.card-body
+							.row 
+								.col-lg-12
+									//- .container
+									form#testform
+										a.button.btn.btn-dark.btn-round.ml-auto(href="#", onclick="add();")
+											i.fa.fa-plus
+											| 
+											| Add Items
+	
+	script.
+		function add(){
+			const para = document.createElement("p");
+			const node = document.createElement("input");
+			para.appendChild(node);
+			document.getElementById("testform").appendChild(para);
+
+		}
