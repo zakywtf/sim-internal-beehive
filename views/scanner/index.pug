@@ -78,18 +78,68 @@ html(lang="en")
 				border-radius: 0.25em;
 			}
 
+			/* The Modal (background) */
+			.modal {
+				display: none; /* Hidden by default */
+				position: fixed; /* Stay in place */
+				z-index: 1; /* Sit on top */
+				padding-top: 100px; /* Location of the box */
+				left: 0;
+				top: 0;
+				width: 100%; /* Full width */
+				height: 100%; /* Full height */
+				overflow: auto; /* Enable scroll if needed */
+				background-color: rgb(0,0,0); /* Fallback color */
+				background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+			}
+
+			/* Modal Content */
+			.modal-content {
+				background-color: #fefefe;
+				margin: auto;
+				padding: 20px;
+				border: 1px solid #888;
+				width: 50%;
+			}
+
+			/* The Close Button */
+			.close {
+				color: #aaaaaa;
+				float: right;
+				font-size: 28px;
+				font-weight: bold;
+			}
+
+			.close:hover,
+			.close:focus {
+				color: #000;
+				text-decoration: none;
+				cursor: pointer;
+			}
+
 		title
 			| QR Code Scanner / Reader
+
 	body
 		.container
 			//- h1 Scan QR Codes
 			.section
 				#my-qr-reader
+
+			#myModal.modal
+				// Modal content
+				.modal-content
+					span.close X
+					p Some text in the Modal..
+
 		script(src="https://unpkg.com/html5-qrcode").
 			
 		//- script(src="./script.js")
 		script.
+			var modal = document.getElementById("myModal");
+			var span = document.getElementsByClassName("close")[0];
 			function domReady(fn) {
+				console.log({fn})
 				if (
 					document.readyState === "complete" ||
 					document.readyState === "interactive"
@@ -105,7 +155,10 @@ html(lang="en")
 				// If found you qr code
 				function onScanSuccess(decodeText, decodeResult) {
 					//- alert("You Qr is : " + decodeText, decodeResult);
+					modal.style.display = "block";
+
 					console.log(`Scan result: ${decodedText}`, decodedResult);
+
 				}
 			
 				let htmlscanner = new Html5QrcodeScanner(
@@ -114,3 +167,14 @@ html(lang="en")
 				);
 				htmlscanner.render(onScanSuccess);
 			});
+
+			span.onclick = function() {
+				modal.style.display = "none";
+			}
+
+			// When the user clicks anywhere outside of the modal, close it
+			window.onclick = function(event) {
+				if (event.target == modal) {
+					modal.style.display = "none";
+				}
+			}

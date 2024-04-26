@@ -34,10 +34,11 @@ block content
 										//- 	i.fa.fa-plus
 										//- 	| 
 										//- 	| Create
-										a.button.btn.btn-dark.btn-round.ml-auto(data-toggle='modal', href='', data-target='#create')
-											i.fa.fa-plus
-											| 
-											| Create
+										if(session.role != 'inventory')
+											a.button.btn.btn-dark.btn-round.ml-auto(data-toggle='modal', href='', data-target='#create')
+												i.fa.fa-plus
+												| 
+												| Create
 						.card-body
 							
 							.table-responsive

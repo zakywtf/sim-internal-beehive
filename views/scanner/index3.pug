@@ -1,0 +1,124 @@
+extends ../layouts/base
+
+block content
+	.content
+		.page-inner
+			.page-header
+				h4.page-title Scanner
+				ul.breadcrumbs
+					li.nav-home
+						a(href="#")
+							i.flaticon-home
+					li.separator
+						i.flaticon-right-arrow
+					li.nav-item
+						a(href="/web/v1/positions") Scanner
+					li.separator
+						i.flaticon-right-arrow
+					li.nav-item
+						a(href="#") Scan Items
+			.row
+				.col-md-12
+					.card
+						.card-header
+							.d-flex.align-items-center
+								h4.card-title Scan Itemss
+						.card-body
+							.row 
+								.col-lg-4
+									h1 Scanner 
+									.container
+										//- h1 Scan QR Codes
+										.section
+											#qr-reader
+											#qr-reader-results
+											
+								.col-lg-8
+									h1 List Items 
+									.container
+										form.form-validation(action="", method="post")
+											.form-group.row
+												.col-sm-12
+
+													#appendElement 
+												//- .row
+												//- 	.col-md-8
+												//- 		b List Items 
+												//- 	.col-md-4
+												//- 		b Total
+												//- br
+											br
+											br
+											.form-group.row
+												.col-sm-12.col-sm-offset-4
+													button.btn.btn-dark.waves-effect.waves-light.float-right(type="button", onclick="submitReqItems()")
+														| Submit
+
+		#MyModal.modal.fade
+			.modal-dialog
+				.modal-content
+					.modal-header
+						h3 
+							b Take Picture
+						button.close(type="button", data-dismiss="modal", onclick="stopCam()")
+							span(aria-hidden="true")
+								i.fas.fa-window-close
+							span.sr-only close
+					.modal-body
+						#appendElementModal
+
+				// /.modal-content
+			// /.modal-dialog
+		// /.modal
+
+	script(src="https://unpkg.com/html5-qrcode").
+	script.
+		var modal = document.getElementById("myModal");
+		var span = document.getElementsByClassName("close")[0];
+		function docReady(fn) {
+			// see if DOM is already available
+			if (document.readyState === "complete"
+				|| document.readyState === "interactive") {
+				// call on next available tick
+				setTimeout(fn, 1);
+			} else {
+				document.addEventListener("DOMContentLoaded", fn);
+			}
+		}
+
+		docReady(function () {
+			var resultContainer = document.getElementById('qr-reader-results');
+			var lastResult, countResults = 0;
+			function onScanSuccess(decodedText, decodedResult) {
+				if (decodedText !== lastResult) {
+					++countResults;
+					lastResult = decodedText;
+					console.log(`Scan result ${decodedText}`, decodedResult);
+					//- const node = document.createElement("li");
+
+					//- const textnode = document.createTextNode(decodedText);
+
+					//- node.appendChild(textnode);
+
+					//- document.getElementById("appendElement").appendChild(node);
+
+					const $labelCol1 = $('<div class="col-sm-1"></div>').append('<label class="form-control-label"> Code Item </label>')
+					const $labelCol2 = $('<div class="col-sm-1"></div>').append('<label class="form-control-label"> Total </label>')
+					const $inputCol1 = $('<div class="col-sm-4"></div>').append($("<input class='form-group col-sm-12' disabled type='text' name='item[]' id='item' value='"+decodedText+"' />"))
+					const $inputCol2 = $('<div class="col-sm-2"></div>').append($("<input class='form-group col-sm-12' type='number' name='quantity[]' id='quantity' value='1'/>"))
+
+					$('<br/><div class="row"></div>')
+						.append($labelCol1)
+						.append($inputCol1)
+						.append($labelCol2)
+						.append($inputCol2)
+						// Because of the missing button you're 2 columns short. Add a placeholder.
+						.appendTo("#appendElement");
+				}
+			}
+
+			var html5QrcodeScanner = new Html5QrcodeScanner(
+				"qr-reader", { fps: 10, qrbox: 250 });
+			html5QrcodeScanner.render(onScanSuccess);
+		});
+

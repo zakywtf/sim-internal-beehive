@@ -19,6 +19,7 @@ router.use('/request-leave', require('./requestLeave'));
 router.use('/announcements', require('./announcements'));
 router.use('/activities', require('./activities'));
 router.use('/request-items', require('./requestItems'));
+router.use('/scan-items', require('./scanner'));
 
 
 module.exports = router;
