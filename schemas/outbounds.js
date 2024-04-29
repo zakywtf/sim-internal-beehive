@@ -3,15 +3,20 @@ const Schema = mongoose.Schema;
 const timestamp = require('./plugins/timestamps');
 
 let sch = new Schema({
-    code: {
-        type: String,
+    item_id: {
+        type: Schema.Types.ObjectId,
+        autopopulate: { select: 'code name serial_number' },
+        ref: 'items'
     },
-    name: {
-        type: String,
+    amount: {
+        type: Number,
+        default: 0
     },
-    department: {
-        type: String
-    }
+    request_item_id: {
+        type: Schema.Types.ObjectId,
+        autopopulate: true,
+        ref: 'req_items'
+    },
 });
 
 sch.plugin(timestamp);

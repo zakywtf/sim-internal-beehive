@@ -60,14 +60,14 @@ block content
 														span.badge.badge-danger Inactive
 													else if data.status == 'active'
 														span.badge.badge-success Active
-												td.d-none.d-md-table-cell
+												td
 													a.button.btn.btn-link.btn-primary.btn-lg(type="button", data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Attendance", href="/web/v1/employees/attendance?user_id="+data._id)
 														i.fa.fa-calendar-check
 													a.button.btn.btn-link.btn-primary.btn-lg(type="button", data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Edit Data", href='/infrastructure/edit/')
 														i.fa.fa-edit
 													button.btn.btn-link.btn-danger(type="button", title='', data-original-title="Hapus Data", data-toggle='modal', href='', data-target='#hapus'+data._id)
 														i.fa.fa-times
-											//- td.d-none.d-md-table-cell
+											//- td
 											//- 	button.btn.btn-lg.btn-outline-dark.dropdown-toggle(data-toggle="dropdown", href="#", aria-expanded="false")
 											//- 		| Action
 											//- 	ul.dropdown-menu

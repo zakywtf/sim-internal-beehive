@@ -1,6 +1,15 @@
 extends ../layouts/base
 
 block content
+	-function prettyDate(dateString){
+		//if it's already a date object and not a string you don't need this line:
+		-var date = new Date(dateString);
+		-var d = date.getDate();
+		-var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+		-var m = monthNames[date.getMonth()];
+		-var y = date.getFullYear();
+		-return d+' '+m+' '+y;
+	-}
 	.content
 		.page-inner
 			.page-header
@@ -31,19 +40,32 @@ block content
 									thead
 										tr
 											th No
-											th Items ID
+											th Code Item
 											th Name
-											th Quantity 
+											th Amount 
 											th Taken By 
 											th Taken At 
 											//- th Action
 									tbody
-										//- each data in datas
-										//- 	tr
-										//- 		td #{no++}
-										//- 		td(style="color: #1F3BB3;") #{data.username}
-										//- 		td #{data.name}
-										//- 		td #{data.email}
+										-var no = 1;
+										each data in datas
+											tr
+												td #{no++}
+												td
+													small.text-primary #{data.item_id.code}
+												td 
+													small #{data.item_id.name}
+												td #{data.amount}
+												td 
+													.user-box
+														.avatar-sm
+															img.avatar-img.rounded-circle(src="/assets/images/avatar_default.png", alt="image profile")
+														.u-text
+															h4  #{data.request_item_id.request_by.name}
+															p.text-muted(style="text-align: left;") #{data.request_item_id.request_by.role}
+												//- td #{data.request_item_id.request_by.name}
+												td
+													small #{prettyDate(data.created_at)}
 										//- 		td #{data.phone}
 										//- 		td(style="text-align: center;")
 										//- 			if data.role == 'perangkat_desa'
@@ -60,24 +82,24 @@ block content
 										//- 			else if data.status == 'active'
 										//- 				span.badge.badge-success Aktif
 										
-										tr 
-											td 1
-											td
-												span.text-primary #12345678
-											td 
-												b Obeng Kembang
-											td 2
-											td
-												.user-box
-													.avatar-sm
-														img.avatar-img.rounded-circle(src="/assets/images/avatar_default.png", alt="image profile")
-													.u-text
-														h4  Nova Zaky Fathoni
-														p.text-muted(style="text-align: left;") Backend Developer
-											td 
-												small Wednesday, 21 September 2023
-												br
-												small 14:50  
+										//- tr 
+										//- 	td 1
+										//- 	td
+										//- 		span.text-primary #12345678
+										//- 	td 
+										//- 		b Obeng Kembang
+										//- 	td 2
+										//- 	td
+										//- 		.user-box
+										//- 			.avatar-sm
+										//- 				img.avatar-img.rounded-circle(src="/assets/images/avatar_default.png", alt="image profile")
+										//- 			.u-text
+										//- 				h4  Nova Zaky Fathoni
+										//- 				p.text-muted(style="text-align: left;") Backend Developer
+										//- 	td 
+										//- 		small Wednesday, 21 September 2023
+										//- 		br
+										//- 		small 14:50  
 											//- td.d-none.d-md-table-cell
 											//- 	button.btn.btn-lg.btn-outline-dark.dropdown-toggle(data-toggle="dropdown", href="#", aria-expanded="false")
 											//- 		| Action

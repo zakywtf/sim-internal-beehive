@@ -1,3 +1,7 @@
+const { IoTSiteWise } = require("aws-sdk");
+const Items = require("../schemas/items");
+const ReqItem = require("../schemas/req_items");
+
 const inboundOutbound = async(items) => {
     // array_elements = ["a", "b", "c", "d", "e", "a", "b", "c", "f", "g", "h", "h", "h", "e", "a"];
 
@@ -23,6 +27,27 @@ const inboundOutbound = async(items) => {
     return current
 }
 
+const updateStatusRequestItem = async (req_id, status) => {
+    const resp = await ReqItem.findOne({ _id: req_id })
+    resp.status = status
+    await resp.save()
+}
+
+const updateStockItems = async (item_id, amount, status) => {
+    if (status == 'inbound') {
+        const resp = await Items.findOne({ _id: item_id })
+        resp.amount = (resp.amount + amount)
+        await resp.save()
+    } else if (status == 'outbound') {
+        const resp = await Items.findOne({ _id: item_id })
+        resp.amount = (resp.amount - amount)
+        await resp.save()
+    }
+}
+
+
 module.exports = {
-    inboundOutbound
+    inboundOutbound,
+    updateStatusRequestItem,
+    updateStockItems
 }
