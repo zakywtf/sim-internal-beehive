@@ -26,7 +26,7 @@ let sch = new Schema({
     },
     status : {
         type:String, 
-        enum:['requested', 'outbound', 'inbound'], 
+        enum:['requested', 'outbound', 'returned', 'inbound'], 
         default:'requested'
     },
     request_by: {
