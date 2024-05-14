@@ -2,6 +2,7 @@ const apiResponse = require("../helpers/apiResponse");
 const mailer = require("../helpers/nodeMailer");
 const Schema = require("../schemas/req_items");
 const Items = require("../schemas/items");
+const moment = require('moment-timezone');
 
 const { generate } = require("../helpers/randGen")
 
@@ -62,6 +63,16 @@ const ReqItemsController = {
         } catch (error) {
             console.log('error ', error);
         }
+    },
+
+    return: async (req, res) => {
+        var data = await Schema.findOne({ _id: req.query._id })
+        // console.log({data})
+        data.status = req.query.status
+        data.updated_at = moment()
+        await data.save()
+
+        res.redirect('/web/v1/request-items');
     },
 }
 

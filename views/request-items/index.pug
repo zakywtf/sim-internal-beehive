@@ -89,6 +89,8 @@ block content
 														span.badge.badge-primary Outbound
 													else if data.status == 'requested'
 														span.badge.badge-danger Requested
+													if data.status == 'returned'
+														span.badge.badge-warning Returned
 												td
 													small #{prettyDate(data.date_request)}
 												td
@@ -97,12 +99,13 @@ block content
 													ul.dropdown-menu
 														li 
 															a.dropdown-item(href='/web/v1/request-items/detail?req_item_id='+data._id) Detail
-														.dropdown-divider
-														li
-															a.dropdown-item(href='/web/v1/projects/detail?_id=87654321') Edit
+														if (data.status == 'outbound' && session.role != 'inventory')
+															.dropdown-divider
+															li
+																a.dropdown-item(href='/web/v1/request-items/return?status=returned&_id='+data._id) Return Item
 															
-														li 
-															a.dropdown-item(href="/web/v1/projects/task?_id=87654321") Delete
+														//- li 
+														//- 	a.dropdown-item(href="/web/v1/projects/task?_id=87654321") Delete
 		
 	.modal.fade(id='create' ,tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
 		.modal-dialog
@@ -138,7 +141,7 @@ block content
 									#myDropdown.dropdown-content
 										input#myInput(type="text", placeholder="Search..", onkeyup="filterFunction()")
 										each item in items
-											a(href="#", onclick="myFunction('"+item.code+"');") #{item.name} | #{item.serial_number}
+											a(href="#", onclick="myFunction('"+item.code+"');") #{item.name}__#{item.serial_number}
 										//- a(href="#", onclick="myFunction('base');") Base
 										//- a(href="#", onclick="myFunction('blog');") Blog
 

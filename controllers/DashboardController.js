@@ -26,14 +26,17 @@ const DashboardController = {
         const clock_out = (attendances.clock_out == null) ? '-' : moment(attendances.clock_out).format('HH:mm')
         const breaks = (attendances.break == null) ? '-' : moment(attendances.break).format('HH:mm')
 
-        const requested = await ReqItems.find({ status: 'requested '}).countDocuments()
-        const returned = await ReqItems.find({ status: 'returned '}).countDocuments()
+        const requested = await ReqItems.find({ status: 'requested'}).countDocuments()
+        const returned = await ReqItems.find({ status: 'returned'}).countDocuments()
         const outbounds = await Outbounds.find({ }).countDocuments()
         const inbounds = await Inbounds.find({ }).countDocuments()
 
+        const arrRequested = await ReqItems.find({ status: 'requested'})
+        const arrReturned = await ReqItems.find({ status: 'returned'})
 
         if (req.session.role == 'inventory') {
-            res.render('dashboard/inventory-dashboard', { requested, returned, outbounds, inbounds });
+            console.log({requested, returned, outbounds, inbounds})
+            res.render('dashboard/inventory-dashboard', { requested, returned, outbounds, inbounds, arrRequested, arrReturned });
             
         } else {
             res.render('dashboard/index', { dateNow, clock_in, clock_out, breaks });

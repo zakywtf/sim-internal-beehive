@@ -55,7 +55,7 @@ const IndexController = {
     saveItems: async (req, res) => {
         for (let i = 0; i < ITEMS.length; i++) {
             const item = ITEMS[i];
-            await Items.create(item)
+            await Items.create({...item, code: '<'+item.code+'>'})
         }
 
         return apiResponse.successResponse(res, 'Selesai');

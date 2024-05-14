@@ -104,6 +104,7 @@ block content
 
 					const $labelCol1 = $('<div class="col-sm-2"></div>').append('<label class="form-control-label"> Code Item </label>')
 					const $labelCol2 = $('<div class="col-sm-1"></div>').append('<label class="form-control-label"> Total </label>')
+					//- const $inputCol1 = $('<div class="col-sm-4"></div>').append($("<input class='form-group col-sm-12' disabled type='text' name='item[]' id='item' value='"+decodedText+"' />"))
 					const $inputCol1 = $('<div class="col-sm-4"></div>').append($("<input class='form-group col-sm-12' disabled type='text' name='item[]' id='item' value='"+decodedText+"' />"))
 					const $inputCol2 = $('<div class="col-sm-2"></div>').append($("<input class='form-group col-sm-12' type='number' name='quantity[]' id='quantity'/>"))
 
@@ -127,6 +128,7 @@ block content
 			var host = window.location.origin;
 			const urlParams = new URLSearchParams(window.location.search);
 			const req_id = urlParams.get('req_item');
+			const status = urlParams.get('status');
 
 			var errorCounterDupInput = 0;
 			var items = [];
@@ -162,27 +164,49 @@ block content
 			//- var quantity = $("input[name='quantity[]']")
 
 			console.log({host, items, quantities, req_id})
-
-			var obj = {
-				items: items,
-				quantities: quantities,
-				status: 'outbound',
-				req_id: req_id
-			}
-			$.ajax({
-				type: "POST",
-				url: host + "/web/v1/outbounds/insert",
-				data: obj,
-				success: function(datas){
-					if (datas.success == 200) {
-						window.location.href = `${host}/web/v1/outbounds`
-
-					}
-				},
-				error: function(errMsg) {
-					console.log('New Error : '+errMsg);
+			if (status == 'requested') {
+				var obj = {
+					items: items,
+					quantities: quantities,
+					status: 'outbound',
+					req_id: req_id
 				}
-			});
+				$.ajax({
+					type: "POST",
+					url: host + "/web/v1/outbounds/insert",
+					data: obj,
+					success: function(datas){
+						if (datas.success == 200) {
+							window.location.href = `${host}/web/v1/outbounds`
+
+						}
+					},
+					error: function(errMsg) {
+						console.log('New Error : '+errMsg);
+					}
+				});
+			} else {
+				var obj = {
+					items: items,
+					quantities: quantities,
+					status: 'inbound',
+					req_id: req_id
+				}
+				$.ajax({
+					type: "POST",
+					url: host + "/web/v1/inbounds/insert",
+					data: obj,
+					success: function(datas){
+						if (datas.success == 200) {
+							window.location.href = `${host}/web/v1/inbounds`
+
+						}
+					},
+					error: function(errMsg) {
+						console.log('New Error : '+errMsg);
+					}
+				});
+			}
 		}
 
 

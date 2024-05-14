@@ -23,7 +23,7 @@ block content
 					.row 
 						.col-lg-12
 							.card
-								.card-header.bg-dark-gradient.bubble-shadow.text-white(style="height:260px;")
+								.card-header.bg-dark-gradient.bubble-shadow.text-white(style="height:400px;")
 									h3 Timesheet
 									.separator-dashed
 									.row 
@@ -32,7 +32,7 @@ block content
 												i.fas.fa-map-pin 
 													| 
 													| Location
-											h6 Klumpit, Tepus, Gunungkidul, Yogyakarta, 55881
+											h6 Yogyakarta, 55881
 										.col-md-5
 											span
 												i.fas.fa-calendar
@@ -88,19 +88,19 @@ block content
 													i.fas.fa-sign-out-alt
 					.row 
 						.col-lg-12
-							.card.flex-fill
-								.card-header 
-									.d-flex.align-items-center
-										span.stamp.stamp-md.bg-secondary.mr-3
-											i.fa.fa-calendar-check
-										div
-											h5.mb-1
-												b
-													| Presence
+							//- .card.flex-fill
+							//- 	.card-header 
+							//- 		.d-flex.align-items-center
+							//- 			span.stamp.stamp-md.bg-secondary.mr-3
+							//- 				i.fa.fa-calendar-check
+							//- 			div
+							//- 				h5.mb-1
+							//- 					b
+							//- 						| Presence
 											
-											small.text-muted Attendance (15) || Leaves (2) || Remaining Days Off (10)
-								.card-body.d-flex
-									#calendar
+							//- 				small.text-muted Attendance (15) || Leaves (2) || Remaining Days Off (10)
+							//- 	.card-body.d-flex
+							//- 		#calendar
 									//- .card
 									//- 	.card-header
 									//- 		.card-title
@@ -169,17 +169,30 @@ block content
 						//- 						h4.card-title 1
 					.row 
 						.col-lg-8
-							.card
-								.card-header
-									.card-title
-										span
-											i.far.fa-chart-bar
-												| 
-												| Feature Statistic
-								.card-body
-									.chart-container(style="min-height: 300px")
-										canvas#statisticsChart
-									#myChartLegend
+							//- .card
+							//- 	.card-header
+							//- 		.card-title
+							//- 			span
+							//- 				i.far.fa-chart-bar
+							//- 					| 
+							//- 					| Feature Statistic
+							//- 	.card-body
+							//- 		.chart-container(style="min-height: 300px")
+							//- 			canvas#statisticsChart
+							//- 		#myChartLegend
+							.card.flex-fill
+								.card-header 
+									.d-flex.align-items-center
+										span.stamp.stamp-md.bg-secondary.mr-3
+											i.fa.fa-calendar-check
+										div
+											h5.mb-1
+												b
+													| Presence
+											
+											small.text-muted Attendance (15) || Leaves (2) || Remaining Days Off (10)
+								.card-body.d-flex
+									#calendar
 						.col-lg-4 
 							.notes
 								.sticky

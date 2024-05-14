@@ -32,10 +32,11 @@ block content
 						.card-header
 							.d-flex.align-items-center
 								h4.card-title Detail Request Items
-								a.button.btn.btn-dark.btn-round.ml-auto(href="/web/v1/scan-items?req_item="+data._id)
-									i.fa.fa-plus
-									| 
-									| Scan Items
+								if(session.role === 'inventory')
+									a.button.btn.btn-dark.btn-round.ml-auto(href="/web/v1/scan-items?req_item="+data._id+'&status='+data.status)
+										i.fa.fa-plus
+										| 
+										| Scan Items
 						.card-body
 							.row(style="margin-left: 2%;")
 								.col-lg-8
@@ -63,6 +64,8 @@ block content
 													span.badge.badge-primary Outbound
 												else if data.status == 'requested'
 													span.badge.badge-danger Requested
+												else if data.status == 'returned'
+													span.badge.badge-warning Returned
 										//- p.invo-addr-1
 										//- 	| #{data.request_by.role}
 										//- 	br
