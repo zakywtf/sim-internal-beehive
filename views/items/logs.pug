@@ -1,0 +1,74 @@
+extends ../layouts/base
+
+block content
+	-function prettyDate(dateString){
+		//if it's already a date object and not a string you don't need this line:
+		-var date = new Date(dateString);
+		-var d = date.getDate();
+		-var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+		-var m = monthNames[date.getMonth()];
+		-var y = date.getFullYear();
+		-return d+' '+m+' '+y;
+	-}
+	.content
+		.page-inner
+			.page-header
+				h4.page-title Logs Item
+				ul.breadcrumbs
+					li.nav-home
+						a(href="#")
+							i.flaticon-home
+					li.separator
+						i.flaticon-right-arrow
+					li.nav-item
+						a(href="#") Logs Item
+			.row
+				.col-md-12
+					.card
+						//- .card-header
+						//- 	.row 
+						//- 		.col-lg-12
+									//- .d-flex.align-items-center
+									//- 	h4.card-title Outbounds
+									//- 	a.button.btn.btn-dark.btn-round.ml-auto(href="/infrastructure/create")
+									//- 		i.fa.fa-plus
+									//- 		| 
+									//- 		| Create
+						.card-body
+							.table-responsive
+								table#basic-datatables.display.table.table-striped.table-hover
+									thead
+										tr
+											th No
+											//- th Code Item
+											th Name
+											th Amount 
+											th Status 
+											th Staff
+											th Date
+											//- th Action
+									tbody
+										-var no = 1;
+										each data in datas
+											tr
+												td #{no++}
+												//- td
+												//- 	small.text-primary #{data.item_id.code}
+												td 
+													small #{data.item_id.name}
+												td #{data.amount}
+												td(style="text-align: center;")
+													if data.status == 'inbound'
+														span.badge.badge-success Inbound
+													else if data.status == 'outbound'
+														span.badge.badge-primary Outbound
+												td 
+													.user-box
+														.avatar-sm
+															img.avatar-img.rounded-circle(src="/photos/"+data.request_item_id.request_by.photo, alt="Avatar")
+														.u-text
+															h4  #{data.request_item_id.request_by.name}
+															p.text-muted(style="text-align: left;") #{data.request_item_id.request_by.role}
+												//- td #{data.request_item_id.request_by.name}
+												td
+													small #{prettyDate(data.created_at)}
