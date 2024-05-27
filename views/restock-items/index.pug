@@ -1,0 +1,147 @@
+extends ../layouts/base
+
+block content
+	-function prettyDate(dateString){
+		//if it's already a date object and not a string you don't need this line:
+		-var date = new Date(dateString);
+		-var d = date.getDate();
+		-var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+		-var m = monthNames[date.getMonth()];
+		-var y = date.getFullYear();
+		-return d+' '+m+' '+y;
+	-}
+	.content
+		.page-inner
+			.page-header
+				h4.page-title Restock Items
+				ul.breadcrumbs
+					li.nav-home
+						a(href="#")
+							i.flaticon-home
+					li.separator
+						i.flaticon-right-arrow
+					li.nav-item
+						a(href="#") Restock Items
+			.row
+				.col-md-12
+					.card
+						.card-header
+							.row 
+								.col-lg-12
+									.d-flex.align-items-center
+										h4.card-title Restock Items
+										//- a.button.btn.btn-dark.btn-round.ml-auto(href="/web/v1/request-items/create")
+										//- 	i.fa.fa-plus
+										//- 	| 
+										//- 	| Create
+										if(session.role == 'inventory')
+											a.button.btn.btn-dark.btn-round.ml-auto(data-toggle='modal', href='', data-target='#create')
+												i.fa.fa-plus
+												| 
+												| Create
+						.card-body
+							
+							.table-responsive
+								table#basic-datatables.display.table.table-striped.table-hover
+									thead
+										tr
+											th No
+											th Form Number
+											//- th Name
+											//- th Status 
+											th Date Check 
+											th Notes
+											th Action
+									tbody
+										-var no = 1;
+										each data in datas
+										
+											//- tr 
+											//- 	td #{no++}
+											//- 	td
+											//- 		span.text-primary ##{data.request_id}
+											//- 	td 
+											//- 		b #{data.request_by.name}
+											//- 	td(style="text-align: center;")
+											//- 		if data.status == 'inbound'
+											//- 			span.badge.badge-success Inbound
+											//- 		else if data.status == 'outbound'
+											//- 			span.badge.badge-primary Outbound
+											//- 		else if data.status == 'requested'
+											//- 			span.badge.badge-danger Requested
+											//- 		if data.status == 'returned'
+											//- 			span.badge.badge-warning Returned
+											//- 	td
+											//- 		small #{prettyDate(data.date_request)}
+											//- 	td
+											//- 		button.btn.btn-lg.btn-outline-dark.dropdown-toggle(data-toggle="dropdown", href="#", aria-expanded="false")
+											//- 			| Action
+											//- 		ul.dropdown-menu
+											//- 			li 
+											//- 				a.dropdown-item(href='/web/v1/request-items/detail?req_item_id='+data._id) Detail
+											//- 			if (data.status == 'outbound' && session.role != 'inventory')
+											//- 				.dropdown-divider
+											//- 				li
+											//- 					a.dropdown-item(href='/web/v1/request-items/return?status=returned&_id='+data._id) Return Item
+															
+														//- li 
+														//- 	a.dropdown-item(href="/web/v1/projects/task?_id=87654321") Delete
+		
+	.modal.fade(id='create' ,tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+		.modal-dialog
+			.modal-content
+				.modal-header
+					h3 
+						b Restock Items
+					button.close(type="button", data-dismiss="modal")
+						span(aria-hidden="true")
+							i.fas.fa-window-close
+						span.sr-only close
+				.modal-body
+					form.form-validation(action="", method="post")
+						.form-group.row
+							.col-sm-12
+								label.form-control-label(for="inputEmail3") Date Request Item
+									span.text-danger *
+								input#date_request.form-control(type="date", name="date_request", required="required")
+								br
+								//- a.button.btn.btn-dark.btn-round.ml-auto(href="#", onclick="myFunction();")
+								//- 	i.fa.fa-plus
+								//- 	| 
+								//- 	| Add Items
+								//- #redeem_form
+								//- 	br
+								
+								.dropdown
+									a.button.btn.btn-dark.btn-round.ml-auto(onclick="myFunction2()")
+										i.fa.fa-plus
+										| 
+										| List Items
+									br
+									#myDropdown.dropdown-content
+										//- input#myInput(type="text", placeholder="Search..", onkeyup="filterFunction()")
+										//- each item in items
+										//- 	a(href="#", onclick="myFunction('"+item.code+"');") #{item.name}__#{item.serial_number}
+										//- a(href="#", onclick="myFunction('base');") Base
+										//- a(href="#", onclick="myFunction('blog');") Blog
+
+						#appendElement 
+							//- .row
+							//- 	.col-md-8
+							//- 		b List Items 
+							//- 	.col-md-4
+							//- 		b Total
+							//- br
+						br
+						br
+						.form-group.row
+							.col-sm-12.col-sm-offset-4
+								button.btn.btn-dark.waves-effect.waves-light.float-right(type="button", onclick="submitReqItems()")
+									| Submit
+				//- .modal-footer
+					//- button.btn.btn-danger(type='button', data-dismiss='modal') Close
+			// /.modal-content
+		// /.modal-dialog
+	// /.modal
+
+	

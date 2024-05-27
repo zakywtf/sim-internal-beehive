@@ -21,7 +21,7 @@ block content
 								.col-lg-12
 									.d-flex.align-items-center
 										h4.card-title Items
-										a.button.btn.btn-dark.btn-round.ml-auto(href="/infrastructure/create")
+										a.button.btn.btn-dark.btn-round.ml-auto(data-toggle='modal', href='', data-target='#create')
 											i.fa.fa-plus
 											| 
 											| Create
@@ -67,7 +67,66 @@ block content
 															
 														li 
 															a.dropdown-item(href="/web/v1/projects/task?_id=87654321") Delete
-			
+
+	.modal.fade(id='create' ,tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+		.modal-dialog
+			.modal-content
+				.modal-header
+					h3 
+						b Create Item
+					button.close(type="button", data-dismiss="modal")
+						span(aria-hidden="true")
+							i.fas.fa-window-close
+						span.sr-only close
+				.modal-body
+					form.form-validation(action="", method="post")
+						.form-group.row
+							.col-sm-12
+								label.form-control-label(for="inputEmail3") Code Item
+									span.text-danger *
+								input.form-control(type="text", name="code", required="required")
+						.form-group.row
+							.col-sm-12
+								label.form-control-label(for="inputEmail3") Name Item
+									span.text-danger *
+								input.form-control(type="text", name="name", required="required")
+						.form-group.row
+							.col-sm-12
+								label.form-control-label(for="inputEmail3") Serial Number
+									span.text-danger *
+								input.form-control(type="text", name="serial_number", required="required")
+						.form-group.row
+							.col-sm-12
+								label.form-control-label(for="inputEmail3") Condition
+									span.text-danger *
+								input.form-control(type="text", name="code", required="required")
+						.form-group.row
+							.col-sm-12
+								label.form-control-label(for="inputEmail3") Unit
+									span.text-danger *
+								input.form-control(type="text", name="unit", required="required")
+						.form-group.row
+							.col-sm-12
+								label.form-control-label(for="inputEmail3") Temporary Location
+									span.text-danger *
+								input.form-control(type="text", name="temp_location", required="required")
+						.form-group.row
+							.col-sm-12
+								label.form-control-label(for="inputEmail3") Grouping
+									span.text-danger *
+								input.form-control(type="text", name="code", required="required")
+						br
+						br
+						.form-group.row
+							.col-sm-12.col-sm-offset-4
+								button.btn.btn-dark.waves-effect.waves-light.float-right(type="button", onclick="submitReqItems()")
+									| Submit
+				//- .modal-footer
+					//- button.btn.btn-danger(type='button', data-dismiss='modal') Close
+			// /.modal-content
+		// /.modal-dialog
+	// /.modal
+
 	each data in datas
 		.modal.fade(id='qr'+data._id ,tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
 			.modal-dialog(style="width: 500px;")

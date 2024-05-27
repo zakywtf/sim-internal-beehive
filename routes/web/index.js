@@ -20,6 +20,7 @@ router.use('/announcements', require('./announcements'));
 router.use('/activities', require('./activities'));
 router.use('/request-items', require('./requestItems'));
 router.use('/scan-items', require('./scanner'));
+router.use('/restock-items', require('./restockItems'));
 
 
 module.exports = router;
